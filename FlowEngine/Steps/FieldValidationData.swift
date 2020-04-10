@@ -17,6 +17,7 @@ struct FieldValidationData : Equatable, Hashable, Decodable {
     }
     
     let id: FieldId
+    let type: FieldType
     let validations: [Rule]?
     
     init(from decoder: Decoder) throws {
@@ -26,6 +27,10 @@ struct FieldValidationData : Equatable, Hashable, Decodable {
             throw DecodingError.typeMismatch(FieldId.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
         }
         self.id = id
+        guard let type = FieldType(rawValue: rawId) else {
+            throw DecodingError.typeMismatch(FieldType.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid type"))
+        }
+        self.type = type
         self.validations = try container.decodeIfPresent([Rule].self, forKey: .validations)
     }
     

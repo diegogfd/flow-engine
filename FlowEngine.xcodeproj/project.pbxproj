@@ -17,6 +17,7 @@
 		E1798C9E2440B8AC00459071 /* DoubleField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9D2440B8AC00459071 /* DoubleField.swift */; };
 		E1798CA02440B91D00459071 /* StringField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9F2440B91C00459071 /* StringField.swift */; };
 		E1798CA22440BA2500459071 /* BoolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA12440BA2500459071 /* BoolField.swift */; };
+		E1798CA42441033C00459071 /* MirrorableEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA32441033C00459071 /* MirrorableEnum.swift */; };
 		E192732F2431454A002167CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192732E2431454A002167CF /* AppDelegate.swift */; };
 		E19273312431454A002167CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273302431454A002167CF /* SceneDelegate.swift */; };
 		E19273332431454A002167CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273322431454A002167CF /* ViewController.swift */; };
@@ -33,7 +34,6 @@
 		E19273532434D388002167CF /* FirstViewControllerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273522434D388002167CF /* FirstViewControllerAction.swift */; };
 		E19273552434D55A002167CF /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273542434D55A002167CF /* AlertAction.swift */; };
 		E19273572434D903002167CF /* FieldValidationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273562434D903002167CF /* FieldValidationData.swift */; };
-		E192735B2434FCE3002167CF /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192735A2434FCE3002167CF /* ValidationError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +47,7 @@
 		E1798C9D2440B8AC00459071 /* DoubleField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleField.swift; sourceTree = "<group>"; };
 		E1798C9F2440B91C00459071 /* StringField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringField.swift; sourceTree = "<group>"; };
 		E1798CA12440BA2500459071 /* BoolField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolField.swift; sourceTree = "<group>"; };
+		E1798CA32441033C00459071 /* MirrorableEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorableEnum.swift; sourceTree = "<group>"; };
 		E192732B2431454A002167CF /* FlowEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E192732E2431454A002167CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E19273302431454A002167CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		E19273522434D388002167CF /* FirstViewControllerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewControllerAction.swift; sourceTree = "<group>"; };
 		E19273542434D55A002167CF /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
 		E19273562434D903002167CF /* FieldValidationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidationData.swift; sourceTree = "<group>"; };
-		E192735A2434FCE3002167CF /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,6 @@
 		E10B0FC324360C0100E9DF49 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				E192735A2434FCE3002167CF /* ValidationError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -131,6 +130,7 @@
 				E12D1AFC243B8DFF008BD88D /* steps.json */,
 				E12D1AFE243BB1E2008BD88D /* actions.json */,
 				E1798C93243E553C00459071 /* FlowState.swift */,
+				E1798CA32441033C00459071 /* MirrorableEnum.swift */,
 			);
 			path = FlowEngine;
 			sourceTree = "<group>";
@@ -249,13 +249,13 @@
 				E1927347243146A1002167CF /* FlowEngine.swift in Sources */,
 				E1927345243145FA002167CF /* Rule.swift in Sources */,
 				E1798C9C2440B89600459071 /* IntField.swift in Sources */,
-				E192735B2434FCE3002167CF /* ValidationError.swift in Sources */,
 				E192734D2434D240002167CF /* NavigationAction.swift in Sources */,
 				E1927343243145C9002167CF /* Step.swift in Sources */,
 				E1798C98243E8DFD00459071 /* ActionRepresentation.swift in Sources */,
 				E1798C9E2440B8AC00459071 /* DoubleField.swift in Sources */,
 				E19273502434D2F4002167CF /* FirstViewController.swift in Sources */,
 				E1798C94243E553C00459071 /* FlowState.swift in Sources */,
+				E1798CA42441033C00459071 /* MirrorableEnum.swift in Sources */,
 				E19273552434D55A002167CF /* AlertAction.swift in Sources */,
 				E1798C96243E6AA800459071 /* JSONValue.swift in Sources */,
 				E19273572434D903002167CF /* FieldValidationData.swift in Sources */,

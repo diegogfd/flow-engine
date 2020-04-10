@@ -18,7 +18,7 @@ class FlowEngine {
     let actions: [Action]
     let state: FlowState
 
-    private var currentStep: Step {
+    var currentStep: Step! {
         didSet {
 //            let bestAction = self.getBestAction()
 //            bestAction?.execute()
@@ -29,12 +29,18 @@ class FlowEngine {
         self.steps = steps
         self.actions = actions
         self.state = state
-        self.currentStep = steps.first!
         self.steps.forEach({$0.flowEngine = self})
         self.actions.forEach({
             var action = $0
             action.flowEngine = self
         })
+        self.goToNextStep()
+    }
+    
+    func goToNextStep() {
+        if let nextStep = self.steps.first(where: {$0.canEnterToStep}) {
+            self.currentStep = nextStep
+        }
     }
     
 //    private func getBestAction() -> Action? {
@@ -88,8 +94,4 @@ class FlowEngine {
 //        }
 //        return nil
 //    }
-    
-    func fulfillField(name: Field.Id, value: Any?){
-        
-    }
 }

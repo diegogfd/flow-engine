@@ -13,12 +13,30 @@ enum CardType: String {
     case debit = "debit_card"
 }
 
-class FlowState: NSObject{
-    var amount: Double?
-    var description: String?
-    var installments: [Int]?
-    var cardType: CardType?
-    var cart: [Cart]?
+class FlowState: NSObject {
+    private(set) var amount: Double?
+    private(set) var descr: String?
+    private(set) var installments: [Int]?
+    private(set) var cardType: CardType?
+    private(set) var cart: [Cart]?
+    
+    func setField(id: FieldId, value: Any?) {
+        let propName = id.mirror.label
+        let mirror = Mirror(reflecting: self)
+        let childProp = mirror.children.first(where: {$0.label == propName})
+        guard type(of: childProp?.value) == type(of: value) else {
+            return
+        }
+        self.setValue(value, forKey: propName)
+    }
+    
+    func getFieldValue(id: FieldId) -> Any? {
+        let propName = id.mirror.label
+        let mirror = Mirror(reflecting: self)
+        let childProp = mirror.children.first(where: {$0.label == propName})
+        return childProp?.value
+    }
+    
 }
 
 struct Cart {

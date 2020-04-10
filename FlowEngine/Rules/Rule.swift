@@ -9,13 +9,14 @@
 import Foundation
 
 enum RuleError<T> : Error {
-    case mismatchData
+    case invalidData
     case invalidOperation
-    case notSatisfied(BooleanOperator, T)
+    case notSatisfied(BooleanOperator, T?)
 }
 
 enum BooleanOperator: String, Decodable {
     case equals
+    case distinct
     case not
     case and
     case or

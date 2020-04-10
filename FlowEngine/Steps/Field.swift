@@ -8,11 +8,18 @@
 
 import Foundation
 
-enum FieldId: String {
+enum FieldId: String, MirrorableEnum, CaseIterable {
     case amount = "AMOUNT"
-    case description = "DESCRIPTION"
+    case descr = "DESCRIPTION"
     case installments = "INSTALLMENTS"
     case cardType = "CARD_TYPE"
+}
+
+enum FieldType: String {
+    case integer
+    case double
+    case string
+    case bool
 }
 
 enum FieldValidationError<T> : Error {
@@ -29,7 +36,8 @@ protocol Field {
     func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
     func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
     func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func equal(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
+    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
+    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
     
     func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError<T>>
 }
@@ -39,12 +47,14 @@ extension Field {
     func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError<T>> {
         let rulesResults = self.fieldData.validations?.map({ (rule) -> Result<Bool, RuleError<T>> in
             guard let ruleValue = rule.value as? T else {
-                return .failure(.mismatchData)
+                return .failure(.invalidData)
             }
             let result: Result<Bool, RuleError<T>>
             switch rule.ruleType {
                 case .equals:
-                    result = self.equal(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.equals(fieldValue: fieldValue, otherValue: ruleValue)
+                case .distinct:
+                    result = self.distinct(fieldValue: fieldValue, otherValue: ruleValue)
                 case .greaterThan:
                     result = self.greaterThan(fieldValue: fieldValue, otherValue: ruleValue)
                 case .greaterThanOrEqual:
@@ -70,6 +80,30 @@ extension Field {
             return .failure(.ruleErrors(errors))
         }
         return .success(true)
+    }
+    
+    func greaterThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
+        return .failure(.invalidOperation)
+    }
+    
+    func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+        return .failure(.invalidOperation)
+    }
+    
+    func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+        return .failure(.invalidOperation)
+    }
+    
+    func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+        return .failure(.invalidOperation)
+    }
+    
+    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+        return .failure(.invalidOperation)
+    }
+    
+    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+        return .failure(.invalidOperation)
     }
     
 }

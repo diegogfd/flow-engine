@@ -9,25 +9,25 @@
 import Foundation
 import UIKit
 
-class FirstViewControllerAction : NavigationAction {
-    unowned var flowEngine: FlowEngine!    
-    var navigationController: UINavigationController
-    var fields: [Field.Name] {
-        return [
-            .setAmount
-        ]
-    }
-    
-    required init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
-    func execute() {
-        let viewController = FirstViewController(action: self)
-        self.navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func setAmount(_ amount: Double) -> ValidationError? {
-        return self.flowEngine.fulfillField(name: .setAmount, value: amount)
-    }
-}
+//class FirstViewControllerAction : NavigationAction {
+//    unowned var flowEngine: FlowEngine!    
+//    var navigationController: UINavigationController
+//    var fields: [Field.Name] {
+//        return [
+//            .setAmount
+//        ]
+//    }
+//    
+//    required init(navigationController: UINavigationController) {
+//        self.navigationController = navigationController
+//    }
+//    
+//    func execute() {
+//        let viewController = FirstViewController(action: self)
+//        self.navigationController.pushViewController(viewController, animated: true)
+//    }
+//    
+//    func setAmount(_ amount: Double) -> ValidationError? {
+//        return self.flowEngine.fulfillField(name: .setAmount, value: amount)
+//    }
+//}

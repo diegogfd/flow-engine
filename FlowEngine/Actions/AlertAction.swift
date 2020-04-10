@@ -9,26 +9,26 @@
 import Foundation
 import UIKit
 
-class AlertAction : NavigationAction {
-    
-    unowned var flowEngine: FlowEngine!
-    
-    let navigationController: UINavigationController
-    var fields: [Field.Name] {
-        return [
-                .setDescription,
-                .setAmount
-            ]
-    }
-    var subActions: [Action]?
-    
-    required init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
-    func execute() {
-        let alertController = UIAlertController(title: "Alert de prueba", message: "Ingresa descripcion", preferredStyle: .alert)
-        self.navigationController.present(alertController, animated: true, completion: nil)
-    }
-    
-}
+//class AlertAction : NavigationAction {
+//    
+//    unowned var flowEngine: FlowEngine!
+//    
+//    let navigationController: UINavigationController
+//    var fields: [Field.Name] {
+//        return [
+//                .setDescription,
+//                .setAmount
+//            ]
+//    }
+//    var subActions: [Action]?
+//    
+//    required init(navigationController: UINavigationController) {
+//        self.navigationController = navigationController
+//    }
+//    
+//    func execute() {
+//        let alertController = UIAlertController(title: "Alert de prueba", message: "Ingresa descripcion", preferredStyle: .alert)
+//        self.navigationController.present(alertController, animated: true, completion: nil)
+//    }
+//    
+//}

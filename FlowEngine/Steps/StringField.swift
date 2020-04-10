@@ -14,24 +14,12 @@ struct StringField: Field {
 
     var fieldData: FieldValidationData
     
-    func greaterThan(fieldValue: T?, otherValue: T?)  -> Result<Bool, RuleError<T>> {
-        return .success(true)
+    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
+        return fieldValue == otherValue ? .success(true) : .failure(.notSatisfied(.equals,fieldValue))
     }
     
-    func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return .success(true)
-    }
-    
-    func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return .success(true)
-    }
-    
-    func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return .success(true)
-    }
-    
-    func equal(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return .success(true)
+    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
+        return fieldValue != otherValue ? .success(true) : .failure(.notSatisfied(.distinct,fieldValue))
     }
     
 }

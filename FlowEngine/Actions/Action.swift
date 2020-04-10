@@ -14,5 +14,5 @@ protocol ActionAssociated {
 
 protocol Action : class, FlowEngineComponent {
     func execute()
-    var fields: [Field.Name] { get }
+    var fields: [FieldId] { get }
 }

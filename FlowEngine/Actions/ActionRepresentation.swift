@@ -10,7 +10,7 @@ import Foundation
 
 struct ActionRepresentation : Decodable {
     let id: String
-    let fieldIds: [Field.Id]
+    let fieldIds: [FieldId]
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -20,9 +20,9 @@ struct ActionRepresentation : Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let rawFields = try container.decode([String].self, forKey: .fields)
-        self.fieldIds = try rawFields.map { (rawField) -> Field.Id in
-            guard let field = Field.Id(rawValue: rawField) else {
-                throw DecodingError.typeMismatch(Field.Id.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
+        self.fieldIds = try rawFields.map { (rawField) -> FieldId in
+            guard let field = FieldId(rawValue: rawField) else {
+                throw DecodingError.typeMismatch(FieldId.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
             }
             return field
         }
