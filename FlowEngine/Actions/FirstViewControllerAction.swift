@@ -12,10 +12,10 @@ import UIKit
 class FirstViewControllerAction : NavigationAction {
     unowned var flowEngine: FlowEngine!    
     var navigationController: UINavigationController
-    var fields: [ActionField] {
+    var fields: [Field.Name] {
         return [
-                ActionField(name: .setAmount, priority: .critical)
-            ]
+            .setAmount
+        ]
     }
     
     required init(navigationController: UINavigationController) {

@@ -8,48 +8,34 @@
 
 import Foundation
 
-class Step: FlowEngineComponent, Equatable {
-    let name: String
-    let requiredFields: Set<Field>
-    let optionalFields: Set<Field>?
-    let rules: [Rule]?
-    unowned var flowEngine: FlowEngine!
+class Step: FlowEngineComponent, Decodable {
+    var flowEngine: FlowEngine!
+    let id: String
+    let requiredFields: [FieldValidationData]
+    let optionalFields: [FieldValidationData]
+    let enterRules: [FieldValidationData]
     
-    private var fulfilledFields: Set<Field> = []
-    
-    private var isFulfilled: Bool {
-        return self.requiredFields.isSubset(of: self.fulfilledFields)
+    private var fulfilledFields: [FieldValidationData] = []
+    private var allFields: [FieldValidationData] {
+        return self.requiredFields + self.optionalFields
     }
     
-    init(name: String, requiredFields: Set<Field>, optionalFields: Set<Field>? = nil, rules: [Rule]? = nil) {
-        self.name = name
-        self.requiredFields = requiredFields
-        self.optionalFields = optionalFields
-        self.rules = rules
+    enum CodingKeys: String, CodingKey {
+        case id
+        case requiredFields = "required_fields"
+        case optionalFields = "optional_fields"
+        case enterRules = "enter_rules"
     }
     
-    func fulfillField(name: Field.Name, value: Any?) -> Result<Bool,ValidationError> {
-        //run validations
-        guard let field = self.requiredFields.union(self.optionalFields ?? []).first(where: {$0.name == name}) else {
-            return .failure(.genericError)
-        }
-        var errorResult: ValidationError?
-        field.validations?.forEach({ (rule) in
-            if let error = rule.evaluate(value: value) {
-                errorResult = error
-                return
-            }
-        })
-        if errorResult == nil {
-            self.fulfilledFields.insert(field)
-        }
-        if let errorResult = errorResult {
-            return .failure(errorResult)
-        }
-        return .success(self.isFulfilled)
+    private func fieldData(for id: FieldId) -> FieldValidationData? {
+        return self.allFields.first(where: { $0.id == id})
     }
     
-    static func == (lhs: Step, rhs: Step) -> Bool {
-        return lhs.name == rhs.name
+    func evaluateField(value: Int, fieldId: FieldId) -> Result<Bool,FieldValidationError<Int>> {
+        guard let fieldData = self.fieldData(for: fieldId) else {
+            return .failure(.ruleErrors([.invalidOperation]))
+        }
+        let field = IntField(fieldData: fieldData)
+        return field.evaluateRules(fieldValue: value)
     }
 }

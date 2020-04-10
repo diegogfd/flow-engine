@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E12D1AFD243B8DFF008BD88D /* steps.json in Resources */ = {isa = PBXBuildFile; fileRef = E12D1AFC243B8DFF008BD88D /* steps.json */; };
+		E12D1AFF243BB1E2008BD88D /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = E12D1AFE243BB1E2008BD88D /* actions.json */; };
+		E1798C94243E553C00459071 /* FlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C93243E553C00459071 /* FlowState.swift */; };
+		E1798C96243E6AA800459071 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C95243E6AA800459071 /* JSONValue.swift */; };
+		E1798C98243E8DFD00459071 /* ActionRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C97243E8DFD00459071 /* ActionRepresentation.swift */; };
+		E1798C9A2440B5CC00459071 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C992440B5CC00459071 /* Field.swift */; };
+		E1798C9C2440B89600459071 /* IntField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9B2440B89600459071 /* IntField.swift */; };
+		E1798C9E2440B8AC00459071 /* DoubleField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9D2440B8AC00459071 /* DoubleField.swift */; };
+		E1798CA02440B91D00459071 /* StringField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9F2440B91C00459071 /* StringField.swift */; };
+		E1798CA22440BA2500459071 /* BoolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA12440BA2500459071 /* BoolField.swift */; };
 		E192732F2431454A002167CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192732E2431454A002167CF /* AppDelegate.swift */; };
 		E19273312431454A002167CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273302431454A002167CF /* SceneDelegate.swift */; };
 		E19273332431454A002167CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273322431454A002167CF /* ViewController.swift */; };
@@ -22,11 +32,21 @@
 		E19273512434D2F4002167CF /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E192734F2434D2F4002167CF /* FirstViewController.xib */; };
 		E19273532434D388002167CF /* FirstViewControllerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273522434D388002167CF /* FirstViewControllerAction.swift */; };
 		E19273552434D55A002167CF /* AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273542434D55A002167CF /* AlertAction.swift */; };
-		E19273572434D903002167CF /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273562434D903002167CF /* Field.swift */; };
+		E19273572434D903002167CF /* FieldValidationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273562434D903002167CF /* FieldValidationData.swift */; };
 		E192735B2434FCE3002167CF /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192735A2434FCE3002167CF /* ValidationError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E12D1AFC243B8DFF008BD88D /* steps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = steps.json; sourceTree = "<group>"; };
+		E12D1AFE243BB1E2008BD88D /* actions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
+		E1798C93243E553C00459071 /* FlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowState.swift; sourceTree = "<group>"; };
+		E1798C95243E6AA800459071 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
+		E1798C97243E8DFD00459071 /* ActionRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRepresentation.swift; sourceTree = "<group>"; };
+		E1798C992440B5CC00459071 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		E1798C9B2440B89600459071 /* IntField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntField.swift; sourceTree = "<group>"; };
+		E1798C9D2440B8AC00459071 /* DoubleField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleField.swift; sourceTree = "<group>"; };
+		E1798C9F2440B91C00459071 /* StringField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringField.swift; sourceTree = "<group>"; };
+		E1798CA12440BA2500459071 /* BoolField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolField.swift; sourceTree = "<group>"; };
 		E192732B2431454A002167CF /* FlowEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E192732E2431454A002167CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E19273302431454A002167CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,7 +64,7 @@
 		E192734F2434D2F4002167CF /* FirstViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstViewController.xib; sourceTree = "<group>"; };
 		E19273522434D388002167CF /* FirstViewControllerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewControllerAction.swift; sourceTree = "<group>"; };
 		E19273542434D55A002167CF /* AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAction.swift; sourceTree = "<group>"; };
-		E19273562434D903002167CF /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		E19273562434D903002167CF /* FieldValidationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldValidationData.swift; sourceTree = "<group>"; };
 		E192735A2434FCE3002167CF /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				E1927344243145F9002167CF /* Rule.swift */,
+				E1798C95243E6AA800459071 /* JSONValue.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -107,6 +128,9 @@
 				E19273372431454E002167CF /* Assets.xcassets */,
 				E19273392431454E002167CF /* LaunchScreen.storyboard */,
 				E192733C2431454E002167CF /* Info.plist */,
+				E12D1AFC243B8DFF008BD88D /* steps.json */,
+				E12D1AFE243BB1E2008BD88D /* actions.json */,
+				E1798C93243E553C00459071 /* FlowState.swift */,
 			);
 			path = FlowEngine;
 			sourceTree = "<group>";
@@ -115,7 +139,12 @@
 			isa = PBXGroup;
 			children = (
 				E1927342243145C9002167CF /* Step.swift */,
-				E19273562434D903002167CF /* Field.swift */,
+				E19273562434D903002167CF /* FieldValidationData.swift */,
+				E1798C992440B5CC00459071 /* Field.swift */,
+				E1798C9B2440B89600459071 /* IntField.swift */,
+				E1798C9D2440B8AC00459071 /* DoubleField.swift */,
+				E1798C9F2440B91C00459071 /* StringField.swift */,
+				E1798CA12440BA2500459071 /* BoolField.swift */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -127,6 +156,7 @@
 				E192734C2434D240002167CF /* NavigationAction.swift */,
 				E19273542434D55A002167CF /* AlertAction.swift */,
 				E19273522434D388002167CF /* FirstViewControllerAction.swift */,
+				E1798C97243E8DFD00459071 /* ActionRepresentation.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -201,7 +231,9 @@
 				E192733B2431454E002167CF /* LaunchScreen.storyboard in Resources */,
 				E19273382431454E002167CF /* Assets.xcassets in Resources */,
 				E19273362431454A002167CF /* Main.storyboard in Resources */,
+				E12D1AFF243BB1E2008BD88D /* actions.json in Resources */,
 				E19273512434D2F4002167CF /* FirstViewController.xib in Resources */,
+				E12D1AFD243B8DFF008BD88D /* steps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,18 +245,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				E19273332431454A002167CF /* ViewController.swift in Sources */,
+				E1798C9A2440B5CC00459071 /* Field.swift in Sources */,
 				E1927347243146A1002167CF /* FlowEngine.swift in Sources */,
 				E1927345243145FA002167CF /* Rule.swift in Sources */,
+				E1798C9C2440B89600459071 /* IntField.swift in Sources */,
 				E192735B2434FCE3002167CF /* ValidationError.swift in Sources */,
 				E192734D2434D240002167CF /* NavigationAction.swift in Sources */,
 				E1927343243145C9002167CF /* Step.swift in Sources */,
+				E1798C98243E8DFD00459071 /* ActionRepresentation.swift in Sources */,
+				E1798C9E2440B8AC00459071 /* DoubleField.swift in Sources */,
 				E19273502434D2F4002167CF /* FirstViewController.swift in Sources */,
+				E1798C94243E553C00459071 /* FlowState.swift in Sources */,
 				E19273552434D55A002167CF /* AlertAction.swift in Sources */,
-				E19273572434D903002167CF /* Field.swift in Sources */,
+				E1798C96243E6AA800459071 /* JSONValue.swift in Sources */,
+				E19273572434D903002167CF /* FieldValidationData.swift in Sources */,
+				E1798CA22440BA2500459071 /* BoolField.swift in Sources */,
 				E19273532434D388002167CF /* FirstViewControllerAction.swift in Sources */,
 				E192732F2431454A002167CF /* AppDelegate.swift in Sources */,
 				E192734B24314C00002167CF /* Action.swift in Sources */,
 				E19273312431454A002167CF /* SceneDelegate.swift in Sources */,
+				E1798CA02440B91D00459071 /* StringField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

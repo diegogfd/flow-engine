@@ -1,0 +1,64 @@
+{
+"operation_type": "CHARGE",
+"steps": [
+  {
+    "id": "SET_AMOUNT",
+    "required_fields": [
+        {
+            "field_id": "AMOUNT",
+            "type": "double",
+            "rules": [
+                {
+                    "type": "GREATER_THAN",
+                    "value": 0
+                },
+                {
+                    "type": "LESS_THAN_OR_EQUAL",
+                    "value": 200000
+                }
+            ]
+        }
+    ],
+    "optional_fields": [
+        {
+            "id": "CART",
+            "type": "map",
+            "rules": null
+        },
+        {
+            "id": "DESCRIPTION",
+            "type": "string",
+            "rules": [
+                {
+                    "type": "LENGHT_LESS_THAN_OR_EQUAL",
+                    "value": 30
+                }
+            ]
+        }
+    ],
+    "rules": [
+        {
+            "field_id": "AMOUNT"
+            "type": "double"
+            "rules": [
+                {
+                    "type": "NOT"
+                    "value": null
+                }
+            ]
+        },
+        {
+            "field_id": "DESCRIPTION"
+            "type": "string"
+            "rules": [
+                {
+                    "type": "EQUALS"
+                    "value": {
+                        "field_id": "OTRO_CAMPO"
+                    }
+                }
+            ]
+        }
+    ]
+  }]
+}

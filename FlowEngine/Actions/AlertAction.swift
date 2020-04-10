@@ -14,12 +14,13 @@ class AlertAction : NavigationAction {
     unowned var flowEngine: FlowEngine!
     
     let navigationController: UINavigationController
-    var fields: [ActionField] {
+    var fields: [Field.Name] {
         return [
-                ActionField(name: .setDescription, priority: .high),
-                ActionField(name: .setAmount, priority: .veryLow)
+                .setDescription,
+                .setAmount
             ]
     }
+    var subActions: [Action]?
     
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
