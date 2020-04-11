@@ -29,7 +29,7 @@ enum BooleanOperator: String, Decodable {
 struct Rule: Decodable {
     
     let ruleType: BooleanOperator
-    let value: JSONValue?
+    let value: Any?
         
     enum CodingKeys: String, CodingKey {
         case ruleType
@@ -39,7 +39,7 @@ struct Rule: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.ruleType = try values.decode(BooleanOperator.self, forKey: .ruleType)
-        self.value = try values.decode(JSONValue.self, forKey: .value)
+        let jsonValue = try values.decode(JSONValue.self, forKey: .value)
+        self.value = jsonValue.value
     }
-    
 }

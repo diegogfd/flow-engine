@@ -8,29 +8,24 @@
 
 import Foundation
 
-enum JSONValue: Decodable {
+struct JSONValue: Decodable {
     
-    case string(String)
-    case int(Int)
-    case double(Double)
-    case bool(Bool)
-    case object([String: JSONValue])
-    case array([JSONValue])
+    var value: Any?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) {
-            self = .string(value)
+            self.value = value
         } else if let value = try? container.decode(Int.self) {
-            self = .int(value)
+            self.value = value
         } else if let value = try? container.decode(Double.self) {
-            self = .double(value)
+            self.value = value
         } else if let value = try? container.decode(Bool.self) {
-            self = .bool(value)
+            self.value = value
         } else if let value = try? container.decode([String: JSONValue].self) {
-            self = .object(value)
+            self.value = value
         } else if let value = try? container.decode([JSONValue].self) {
-            self = .array(value)
+            self.value = value
         } else {
             throw DecodingError.typeMismatch(JSONValue.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a JSON"))
         }
