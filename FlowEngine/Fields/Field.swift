@@ -8,24 +8,6 @@
 
 import Foundation
 
-enum FieldId: String, MirrorableEnum, CaseIterable {
-    case amount = "AMOUNT"
-    case descr = "DESCRIPTION"
-    case installments = "INSTALLMENTS"
-    case cardType = "CARD_TYPE"
-}
-
-enum FieldType: String {
-    case integer
-    case double
-    case string
-    case bool
-}
-
-enum FieldValidationError<T> : Error {
-    case ruleErrors([RuleError<T>])
-}
-
 protocol Field {
     
     associatedtype T

@@ -18,6 +18,7 @@
 		E1798CA02440B91D00459071 /* StringField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798C9F2440B91C00459071 /* StringField.swift */; };
 		E1798CA22440BA2500459071 /* BoolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA12440BA2500459071 /* BoolField.swift */; };
 		E1798CA42441033C00459071 /* MirrorableEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA32441033C00459071 /* MirrorableEnum.swift */; };
+		E1798CA724425FF000459071 /* FieldEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA624425FF000459071 /* FieldEnums.swift */; };
 		E192732F2431454A002167CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192732E2431454A002167CF /* AppDelegate.swift */; };
 		E19273312431454A002167CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273302431454A002167CF /* SceneDelegate.swift */; };
 		E19273332431454A002167CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273322431454A002167CF /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		E1798C9F2440B91C00459071 /* StringField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringField.swift; sourceTree = "<group>"; };
 		E1798CA12440BA2500459071 /* BoolField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolField.swift; sourceTree = "<group>"; };
 		E1798CA32441033C00459071 /* MirrorableEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorableEnum.swift; sourceTree = "<group>"; };
+		E1798CA624425FF000459071 /* FieldEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEnums.swift; sourceTree = "<group>"; };
 		E192732B2431454A002167CF /* FlowEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E192732E2431454A002167CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E19273302431454A002167CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,20 +81,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E10B0FC224360BF500E9DF49 /* Rules */ = {
+		E1798CA524425FBA00459071 /* Fields */ = {
 			isa = PBXGroup;
 			children = (
-				E1927344243145F9002167CF /* Rule.swift */,
-				E1798C95243E6AA800459071 /* JSONValue.swift */,
+				E1798C992440B5CC00459071 /* Field.swift */,
+				E1798C9B2440B89600459071 /* IntField.swift */,
+				E1798C9D2440B8AC00459071 /* DoubleField.swift */,
+				E1798C9F2440B91C00459071 /* StringField.swift */,
+				E1798CA12440BA2500459071 /* BoolField.swift */,
+				E1798CA624425FF000459071 /* FieldEnums.swift */,
 			);
-			path = Rules;
+			path = Fields;
 			sourceTree = "<group>";
 		};
-		E10B0FC324360C0100E9DF49 /* Errors */ = {
+		E1798CA82442603A00459071 /* Engine components */ = {
 			isa = PBXGroup;
 			children = (
+				E1927346243146A1002167CF /* FlowEngine.swift */,
+				E1927342243145C9002167CF /* Step.swift */,
+				E1798C93243E553C00459071 /* FlowState.swift */,
+				E19273562434D903002167CF /* FieldValidationData.swift */,
+				E192734A24314C00002167CF /* Action.swift */,
+				E1798C97243E8DFD00459071 /* ActionRepresentation.swift */,
+				E1927344243145F9002167CF /* Rule.swift */,
 			);
-			path = Errors;
+			path = "Engine components";
+			sourceTree = "<group>";
+		};
+		E1798CA9244260B900459071 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				E1798C95243E6AA800459071 /* JSONValue.swift */,
+				E1798CA32441033C00459071 /* MirrorableEnum.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		E19273222431454A002167CF = {
@@ -114,12 +136,11 @@
 		E192732D2431454A002167CF /* FlowEngine */ = {
 			isa = PBXGroup;
 			children = (
-				E1927346243146A1002167CF /* FlowEngine.swift */,
-				E10B0FC324360C0100E9DF49 /* Errors */,
-				E10B0FC224360BF500E9DF49 /* Rules */,
+				E1798CA82442603A00459071 /* Engine components */,
+				E1798CA524425FBA00459071 /* Fields */,
+				E1798CA9244260B900459071 /* Other */,
 				E192735F24352D3A002167CF /* View Controllers */,
 				E192735D24352CEB002167CF /* Actions */,
-				E192735C24352CD2002167CF /* Steps */,
 				E192732E2431454A002167CF /* AppDelegate.swift */,
 				E19273302431454A002167CF /* SceneDelegate.swift */,
 				E19273322431454A002167CF /* ViewController.swift */,
@@ -129,34 +150,16 @@
 				E192733C2431454E002167CF /* Info.plist */,
 				E12D1AFC243B8DFF008BD88D /* steps.json */,
 				E12D1AFE243BB1E2008BD88D /* actions.json */,
-				E1798C93243E553C00459071 /* FlowState.swift */,
-				E1798CA32441033C00459071 /* MirrorableEnum.swift */,
 			);
 			path = FlowEngine;
-			sourceTree = "<group>";
-		};
-		E192735C24352CD2002167CF /* Steps */ = {
-			isa = PBXGroup;
-			children = (
-				E1927342243145C9002167CF /* Step.swift */,
-				E19273562434D903002167CF /* FieldValidationData.swift */,
-				E1798C992440B5CC00459071 /* Field.swift */,
-				E1798C9B2440B89600459071 /* IntField.swift */,
-				E1798C9D2440B8AC00459071 /* DoubleField.swift */,
-				E1798C9F2440B91C00459071 /* StringField.swift */,
-				E1798CA12440BA2500459071 /* BoolField.swift */,
-			);
-			path = Steps;
 			sourceTree = "<group>";
 		};
 		E192735D24352CEB002167CF /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				E192734A24314C00002167CF /* Action.swift */,
 				E192734C2434D240002167CF /* NavigationAction.swift */,
 				E19273542434D55A002167CF /* AlertAction.swift */,
 				E19273522434D388002167CF /* FirstViewControllerAction.swift */,
-				E1798C97243E8DFD00459071 /* ActionRepresentation.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				E19273332431454A002167CF /* ViewController.swift in Sources */,
 				E1798C9A2440B5CC00459071 /* Field.swift in Sources */,
 				E1927347243146A1002167CF /* FlowEngine.swift in Sources */,
+				E1798CA724425FF000459071 /* FieldEnums.swift in Sources */,
 				E1927345243145FA002167CF /* Rule.swift in Sources */,
 				E1798C9C2440B89600459071 /* IntField.swift in Sources */,
 				E192734D2434D240002167CF /* NavigationAction.swift in Sources */,
