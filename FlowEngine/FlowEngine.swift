@@ -16,18 +16,27 @@ class FlowEngine {
     
     let steps: [Step]
     let actions: [Action]
+    let activeActions: [ActionRepresentation]
     let state: FlowState
 
     var currentStep: Step! {
         didSet {
-//            let bestAction = self.getBestAction()
-//            bestAction?.execute()
+            let bestActionIds = self.getBestActionIds()
+            self.currentStepActions = self.actions.filter({bestActionIds.contains($0.id)})
+            self.currentAction = self.currentStepActions.first
+        }
+    }
+    var currentStepActions: [Action] = []
+    var currentAction: Action? {
+        didSet {
+            currentAction?.execute()
         }
     }
     
-    init(steps: [Step], actions: [Action], state: FlowState) {
+    init(steps: [Step], activeActions: [ActionRepresentation], actions: [Action], state: FlowState) {
         self.steps = steps
         self.actions = actions
+        self.activeActions = activeActions
         self.state = state
         self.steps.forEach({$0.flowEngine = self})
         self.actions.forEach({
@@ -43,55 +52,61 @@ class FlowEngine {
         }
     }
     
-//    private func getBestAction() -> Action? {
-//        //el que matchee mas campos gana
-//        let requiredFieldNames = self.currentStep.requiredFields.map({$0.name})
-//        let matchingFieldsPerAction = self.actions.map { (action) -> Int in
-//            return action.fields.filter({requiredFieldNames.contains($0.name)}).count
-//        }
-//        let maxOcurrences = matchingFieldsPerAction.max() ?? 0
-//        var bestActions: [Action] = []
-//        for (index, value) in matchingFieldsPerAction.enumerated() {
-//            if value == maxOcurrences {
-//                bestActions.append(self.actions[index])
-//            }
-//        }
-//        if bestActions.count > 1{
-//            //si hay empate se toma el que sume mas entre las prioridades
-//            let matchingFields = bestActions.map { (action) -> [ActionField] in
-//                return action.fields.filter({requiredFieldNames.contains($0.name)})
-//            }
-//            let results = matchingFields.map { (actionFields) -> Int in
-//                return actionFields.reduce(0) {sum, field in
-//                    return sum + field.priority.rawValue
-//                }
-//            }
-//            let maxResult = results.max() ?? 0
-//            for (index, value) in results.enumerated() {
-//                if value == maxResult {
-//                    return bestActions[index]
-//                }
-//            }
-//            return nil
-//        } else {
-//            return bestActions.first
-//        }
-//    }
+    func goToNextActionIfNeeded() {
+        guard let currentAction = self.currentAction else {
+            return
+        }
+        let currentActionFields = Set(arrayLiteral: currentAction.fieldIds)
+        let currentStepFulfilledFields = Set(arrayLiteral: currentStep.fulfilledFields.map({$0.id}))
+        if currentActionFields.isSubset(of: currentStepFulfilledFields) {
+            self.currentStepActions.removeFirst()
+            self.currentAction = self.currentStepActions.first
+        }
+    }
     
-//    func fulfillField(name: Field.Name, value: Any?) -> ValidationError? {
-//        let result = self.currentStep.fulfillField(name: name, value: value)
-//        switch result {
-//        case .success(let goToNextStep):
-//            if goToNextStep {
-//                guard let index = self.steps.firstIndex(of: self.currentStep),
-//                    index + 1 < self.steps.count else {
-//                        return .genericError
-//                }
-//                self.currentStep = self.steps[index + 1]
-//            }
-//        case .failure(let error):
-//            return error
-//        }
-//        return nil
-//    }
+    private func getBestActionIds() -> [ActionId] {
+        var requiredFieldIds = self.currentStep.requiredFields.map({ return $0.id })
+        var optionalFieldIds = self.currentStep.optionalFields.map({ return $0.id })
+        var bestActions: [ActionRepresentation] = []
+        while let fieldId = requiredFieldIds.first {
+            var candidateActions = self.activeActions.filter({$0.fieldIds.contains(fieldId)})
+            //filtro las que tengan más campos requeridos
+            candidateActions = self.filterCandidateActions(candidateActions, by: requiredFieldIds)
+            //filtro las que tengan más campos opcionales
+            candidateActions = self.filterCandidateActions(candidateActions, by: optionalFieldIds)
+            //filtro las que tengan menos de otros fields
+            candidateActions = self.filterCandidateActions(candidateActions, byDistinct: requiredFieldIds + optionalFieldIds)
+            if let selectedAction = candidateActions.first {
+                bestActions.append(selectedAction)
+                requiredFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
+                optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
+            } else {
+                // no deberia entrar acá, porque sino nunca vas a poder salir del step
+                requiredFieldIds.removeAll(where: {$0 == fieldId})
+            }
+        }
+        return bestActions.map({$0.id})
+    }
+    
+    private func filterCandidateActions(_ candidateActions: [ActionRepresentation], by fields: [FieldId]) -> [ActionRepresentation]  {
+        var candidateActions = candidateActions
+        let requiredFieldsSatisfied = candidateActions.compactMap({$0.fieldIds.filter({fields.contains($0)}).count})
+        for (index, numberOfFields) in requiredFieldsSatisfied.enumerated() {
+            if numberOfFields != requiredFieldsSatisfied.max() {
+                candidateActions.remove(at: index)
+            }
+        }
+        return candidateActions
+    }
+    
+    private func filterCandidateActions(_ candidateActions: [ActionRepresentation], byDistinct fields: [FieldId]) -> [ActionRepresentation]  {
+        var candidateActions = candidateActions
+        let requiredFieldsSatisfied = candidateActions.compactMap({$0.fieldIds.filter({!fields.contains($0)}).count})
+        for (index, numberOfFields) in requiredFieldsSatisfied.enumerated() {
+            if numberOfFields != requiredFieldsSatisfied.min() {
+                candidateActions.remove(at: index)
+            }
+        }
+        return candidateActions
+    }
 }

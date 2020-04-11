@@ -12,7 +12,14 @@ protocol ActionAssociated {
     var action: Action { get }
 }
 
+enum ActionId: String {
+    case calculator
+    case cardTypeSelection
+    case installmentsSelection
+}
+
 protocol Action : class, FlowEngineComponent {
     func execute()
-    var fields: [FieldId] { get }
+    var id: ActionId { get }
+    var fieldIds: [FieldId] { get }
 }

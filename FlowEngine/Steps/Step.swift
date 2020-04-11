@@ -15,7 +15,16 @@ class Step: FlowEngineComponent, Decodable {
     let optionalFields: [FieldValidationData]
     let enterRules: [FieldValidationData]
     
-    private var fulfilledFields: [FieldValidationData] = []
+    var fulfilledFields: [FieldValidationData] = [] {
+        didSet {
+            let requiredFieldsSet = Set(arrayLiteral: requiredFields)
+            let fulfilledFieldsSet = Set(arrayLiteral: fulfilledFields)
+            //chequeo si se completaron todos los campos para avanzar al next step
+            if requiredFieldsSet.isSubset(of: fulfilledFieldsSet) {
+                self.flowEngine.goToNextStep()
+            }
+        }
+    }
     private var allFields: [FieldValidationData] {
         return self.requiredFields + self.optionalFields
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 struct ActionRepresentation : Decodable {
-    let id: String
+    let id: ActionId
     let fieldIds: [FieldId]
     
     enum CodingKeys: String, CodingKey {
@@ -26,6 +26,10 @@ struct ActionRepresentation : Decodable {
             }
             return field
         }
-        self.id = try container.decode(String.self, forKey: .id)
+        let rawId = try container.decode(String.self, forKey: .id)
+        guard let id = ActionId(rawValue: rawId) else {
+            throw DecodingError.typeMismatch(ActionId.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
+        }
+        self.id = id
     }
 }
