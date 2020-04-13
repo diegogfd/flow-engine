@@ -14,43 +14,43 @@ protocol Field {
     
     var fieldData: FieldValidationData { get }
     
-    func greaterThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
-    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>
+    func greaterThan(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
+    func greaterThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
+    func lessThan(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
+    func lessThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
+    func equals(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
+    func distinct(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>
     
-    func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError<T>>
+    func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError>
 }
 
 extension Field {
     
-    func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError<T>> {
-        let rulesResults = self.fieldData.validations?.map({ (rule) -> Result<Bool, RuleError<T>> in
+    func evaluateRules(fieldValue: T?) -> Result<Bool,FieldValidationError> {
+        let rulesResults = self.fieldData.validations?.map({ (rule) -> Result<Bool, RuleError> in
             guard let ruleValue = rule.value as? T else {
                 return .failure(.invalidData)
             }
-            let result: Result<Bool, RuleError<T>>
+            let result: Result<Bool, RuleError>
             switch rule.ruleType {
                 case .equals:
-                    result = self.equals(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.equals(fieldValue: fieldValue, ruleValue: ruleValue)
                 case .distinct:
-                    result = self.distinct(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.distinct(fieldValue: fieldValue, ruleValue: ruleValue)
                 case .greaterThan:
-                    result = self.greaterThan(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.greaterThan(fieldValue: fieldValue, ruleValue: ruleValue)
                 case .greaterThanOrEqual:
-                    result = self.greaterThanOrEqual(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.greaterThanOrEqual(fieldValue: fieldValue, ruleValue: ruleValue)
                 case .lessThan:
-                    result = self.lessThan(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.lessThan(fieldValue: fieldValue, ruleValue: ruleValue)
                 case .lessThanOrEqual:
-                    result = self.lessThanOrEqual(fieldValue: fieldValue, otherValue: ruleValue)
+                    result = self.lessThanOrEqual(fieldValue: fieldValue, ruleValue: ruleValue)
                 default:
                     result = .failure(.invalidOperation)
             }
             return result
         })
-        let errors = rulesResults?.compactMap({ (result) -> RuleError<Self.T>? in
+        let errors = rulesResults?.compactMap({ (result) -> RuleError? in
             switch result {
             case .success(_):
                 return nil
@@ -64,27 +64,27 @@ extension Field {
         return .success(true)
     }
     
-    func greaterThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
+    func greaterThan(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
         return .failure(.invalidOperation)
     }
     
-    func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+    func greaterThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>{
         return .failure(.invalidOperation)
     }
     
-    func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+    func lessThan(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>{
         return .failure(.invalidOperation)
     }
     
-    func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+    func lessThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>{
         return .failure(.invalidOperation)
     }
     
-    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+    func equals(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>{
         return .failure(.invalidOperation)
     }
     
-    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>>{
+    func distinct(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError>{
         return .failure(.invalidOperation)
     }
     

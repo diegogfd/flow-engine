@@ -14,12 +14,12 @@ struct StringField: Field {
 
     var fieldData: FieldValidationData
     
-    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return fieldValue == otherValue ? .success(true) : .failure(.notSatisfied(.equals,fieldValue))
+    func equals(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        return fieldValue == ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .equals, value: ruleValue)))
     }
     
-    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        return fieldValue != otherValue ? .success(true) : .failure(.notSatisfied(.distinct,fieldValue))
+    func distinct(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        return fieldValue != ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .distinct, value: ruleValue)))
     }
     
 }

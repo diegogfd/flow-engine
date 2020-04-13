@@ -22,6 +22,6 @@ enum FieldType: String {
     case bool
 }
 
-enum FieldValidationError<T> : Error {
-    case ruleErrors([RuleError<T>])
+enum FieldValidationError : Error {
+    case ruleErrors([RuleError])
 }

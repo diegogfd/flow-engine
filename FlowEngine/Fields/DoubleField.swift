@@ -14,46 +14,46 @@ struct DoubleField: Field {
     
     var fieldData: FieldValidationData
     
-    func greaterThan(fieldValue: T?, otherValue: T?)  -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func greaterThan(fieldValue: T?, ruleValue: T?)  -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue > otherValue ? .success(true) : .failure(.notSatisfied(.greaterThan,fieldValue))
+        return fieldValue > ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .greaterThan, value: ruleValue)))
     }
     
-    func greaterThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func greaterThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue >= otherValue ? .success(true) : .failure(.notSatisfied(.greaterThanOrEqual,fieldValue))
+        return fieldValue >= ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .greaterThanOrEqual, value: ruleValue)))
     }
     
-    func lessThan(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func lessThan(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue < otherValue ? .success(true) : .failure(.notSatisfied(.lessThan,fieldValue))
+        return fieldValue < ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .lessThan, value: ruleValue)))
     }
     
-    func lessThanOrEqual(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func lessThanOrEqual(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue <= otherValue ? .success(true) : .failure(.notSatisfied(.lessThanOrEqual,fieldValue))
+        return fieldValue <= ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .lessThanOrEqual, value: ruleValue)))
     }
     
-    func equals(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func equals(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue == otherValue ? .success(true) : .failure(.notSatisfied(.equals,fieldValue))
+        return fieldValue == ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .equals, value: ruleValue)))
     }
     
-    func distinct(fieldValue: T?, otherValue: T?) -> Result<Bool, RuleError<T>> {
-        guard let fieldValue = fieldValue, let otherValue = otherValue else {
+    func distinct(fieldValue: T?, ruleValue: T?) -> Result<Bool, RuleError> {
+        guard let fieldValue = fieldValue, let ruleValue = ruleValue else {
             return .failure(.invalidData)
         }
-        return fieldValue != otherValue ? .success(true) : .failure(.notSatisfied(.distinct,fieldValue))
+        return fieldValue != ruleValue ? .success(true) : .failure(.notSatisfied(Rule(ruleType: .distinct, value: ruleValue)))
     }
 
 }

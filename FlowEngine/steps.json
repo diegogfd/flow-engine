@@ -4,37 +4,10 @@
   {
     "id": "SET_AMOUNT",
     "required_fields": [
-        {
-            "field_id": "AMOUNT",
-            "type": "double",
-            "rules": [
-                {
-                    "type": "GREATER_THAN",
-                    "value": 0
-                },
-                {
-                    "type": "LESS_THAN_OR_EQUAL",
-                    "value": 200000
-                }
-            ]
-        }
+        "AMOUNT"
     ],
     "optional_fields": [
-        {
-            "id": "CART",
-            "type": "map",
-            "rules": null
-        },
-        {
-            "id": "DESCRIPTION",
-            "type": "string",
-            "rules": [
-                {
-                    "type": "LENGHT_LESS_THAN_OR_EQUAL",
-                    "value": 30
-                }
-            ]
-        }
+        "CART", "DESCRIPTION"
     ],
     "rules": [
         {
@@ -42,8 +15,12 @@
             "type": "double"
             "rules": [
                 {
-                    "type": "NOT"
-                    "value": null
+                    "type": "LESS_THAN_OR_EQUAL",
+                    "value": 0
+                },
+                {
+                    "type": "GREATER_THAN",
+                    "value": 50000
                 }
             ]
         },
@@ -52,13 +29,70 @@
             "type": "string"
             "rules": [
                 {
-                    "type": "EQUALS"
-                    "value": {
-                        "field_id": "OTRO_CAMPO"
-                    }
+                    "type": "LESS_THAN_OR_EQUAL"
+                    "value": 30
                 }
             ]
         }
     ]
-  }]
+  },
+  {
+      "id": "SET_CARD_TYPE",
+      "required_fields": [
+          "CARD_TYPE"
+      ],
+      "optional_fields": null,
+      "rules": [
+          {
+              "field_id": "CARD_TYPE"
+              "type": "string"
+              "rules": [
+                  {
+                      "type": "EQUALS"
+                      "value": null
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "id": "SET_INSTALLMENTS",
+      "required_fields": [
+          "INSTALLMENTS"
+      ],
+      "optional_fields": null,
+      "rules": [
+          {
+              "field_id": "INSTALLMENTS"
+              "type": "int"
+              "rules": [
+                  {
+                      "type": "EQUALS"
+                      "value": null
+                  }
+              ]
+          },
+          {
+              "field_id": "CARD_TYPE"
+              "type": "string"
+              "rules": [
+                  {
+                      "type": "EQUALS"
+                      "value": "CREDIT_CARD"
+                  }
+              ]
+          },
+          {
+              "field_id": "AMOUNT"
+              "type": "double"
+              "rules": [
+                  {
+                      "type": "GREATER_THAN_OR_EQUAL"
+                      "value": 100
+                  }
+              ]
+          }
+      ]
+  }
+]
 }

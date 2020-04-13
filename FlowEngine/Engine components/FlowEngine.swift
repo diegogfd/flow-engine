@@ -57,7 +57,7 @@ class FlowEngine {
             return
         }
         let currentActionFields = Set(arrayLiteral: currentAction.fieldIds)
-        let currentStepFulfilledFields = Set(arrayLiteral: currentStep.fulfilledFields.map({$0.id}))
+        let currentStepFulfilledFields = Set(arrayLiteral: currentStep.fulfilledFields)
         if currentActionFields.isSubset(of: currentStepFulfilledFields) {
             self.currentStepActions.removeFirst()
             self.currentAction = self.currentStepActions.first
@@ -65,8 +65,8 @@ class FlowEngine {
     }
     
     private func getBestActionIds() -> [ActionId] {
-        var requiredFieldIds = self.currentStep.requiredFields.map({ return $0.id })
-        var optionalFieldIds = self.currentStep.optionalFields.map({ return $0.id })
+        var requiredFieldIds = self.currentStep.requiredFields
+        var optionalFieldIds = self.currentStep.optionalFields
         var bestActions: [ActionRepresentation] = []
         while let fieldId = requiredFieldIds.first {
             var candidateActions = self.activeActions.filter({$0.fieldIds.contains(fieldId)})
@@ -83,6 +83,20 @@ class FlowEngine {
             } else {
                 // no deberia entrar acá, porque sino nunca vas a poder salir del step
                 requiredFieldIds.removeAll(where: {$0 == fieldId})
+            }
+        }
+        //si quedan campos opcionales, repito el procedimiento, pueden no cumplirse todos
+        while let fieldId = optionalFieldIds.first {
+            var candidateActions = self.activeActions.filter({$0.fieldIds.contains(fieldId)})
+            //filtro las que tengan más campos opcionales
+            candidateActions = self.filterCandidateActions(candidateActions, by: optionalFieldIds)
+            //filtro las que tengan menos de otros fields
+            candidateActions = self.filterCandidateActions(candidateActions, byDistinct: optionalFieldIds)
+            if let selectedAction = candidateActions.first {
+                bestActions.append(selectedAction)
+                optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
+            } else {
+                optionalFieldIds.removeAll(where: {$0 == fieldId})
             }
         }
         return bestActions.map({$0.id})

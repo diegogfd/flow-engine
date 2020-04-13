@@ -19,6 +19,7 @@
 		E1798CA22440BA2500459071 /* BoolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA12440BA2500459071 /* BoolField.swift */; };
 		E1798CA42441033C00459071 /* MirrorableEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA32441033C00459071 /* MirrorableEnum.swift */; };
 		E1798CA724425FF000459071 /* FieldEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CA624425FF000459071 /* FieldEnums.swift */; };
+		E1798CAB2444E86D00459071 /* RuleEvaluatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1798CAA2444E86D00459071 /* RuleEvaluatable.swift */; };
 		E192732F2431454A002167CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E192732E2431454A002167CF /* AppDelegate.swift */; };
 		E19273312431454A002167CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273302431454A002167CF /* SceneDelegate.swift */; };
 		E19273332431454A002167CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19273322431454A002167CF /* ViewController.swift */; };
@@ -50,6 +51,7 @@
 		E1798CA12440BA2500459071 /* BoolField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolField.swift; sourceTree = "<group>"; };
 		E1798CA32441033C00459071 /* MirrorableEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorableEnum.swift; sourceTree = "<group>"; };
 		E1798CA624425FF000459071 /* FieldEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEnums.swift; sourceTree = "<group>"; };
+		E1798CAA2444E86D00459071 /* RuleEvaluatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleEvaluatable.swift; sourceTree = "<group>"; };
 		E192732B2431454A002167CF /* FlowEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E192732E2431454A002167CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E19273302431454A002167CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		E1798CA524425FBA00459071 /* Fields */ = {
 			isa = PBXGroup;
 			children = (
+				E1798CAA2444E86D00459071 /* RuleEvaluatable.swift */,
 				E1798C992440B5CC00459071 /* Field.swift */,
 				E1798C9B2440B89600459071 /* IntField.swift */,
 				E1798C9D2440B8AC00459071 /* DoubleField.swift */,
@@ -266,6 +269,7 @@
 				E1798CA22440BA2500459071 /* BoolField.swift in Sources */,
 				E19273532434D388002167CF /* FirstViewControllerAction.swift in Sources */,
 				E192732F2431454A002167CF /* AppDelegate.swift in Sources */,
+				E1798CAB2444E86D00459071 /* RuleEvaluatable.swift in Sources */,
 				E192734B24314C00002167CF /* Action.swift in Sources */,
 				E19273312431454A002167CF /* SceneDelegate.swift in Sources */,
 				E1798CA02440B91D00459071 /* StringField.swift in Sources */,
