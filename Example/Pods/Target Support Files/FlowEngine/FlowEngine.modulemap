@@ -1,0 +1,6 @@
+framework module FlowEngine {
+  umbrella header "FlowEngine-umbrella.h"
+
+  export *
+  module * { export * }
+}

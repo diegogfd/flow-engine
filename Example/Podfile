@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FlowEngine_Example' do
+  pod 'FlowEngine', :path => '../'
+
+  target 'FlowEngine_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

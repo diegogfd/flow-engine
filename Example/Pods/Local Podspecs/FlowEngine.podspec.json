@@ -1,0 +1,27 @@
+{
+  "name": "FlowEngine",
+  "version": "0.1.0",
+  "summary": "A short description of FlowEngine.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Diego Flores Domenech/FlowEngine",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Diego Flores Domenech": "diego.domenech@mercadolibre.com"
+  },
+  "source": {
+    "git": "https://github.com/Diego Flores Domenech/FlowEngine.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "FlowEngine/Classes/**/*",
+  "resource_bundles": {
+    "FlowEngine": [
+      "FlowEngine/Assets/*"
+    ]
+  }
+}
