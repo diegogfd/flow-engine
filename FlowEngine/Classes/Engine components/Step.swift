@@ -22,7 +22,7 @@ class Step: FlowEngineComponent, Decodable {
     }
     var currentAction: Action? {
         didSet {
-            currentAction?.execute()
+            currentAction?.execute(for: self.allFields)
         }
     }
     

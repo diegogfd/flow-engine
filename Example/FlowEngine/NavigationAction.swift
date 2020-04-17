@@ -1,13 +1,13 @@
 //
 //  NavigationAction.swift
-//  FlowEngine
+//  FlowEngine_Example
 //
-//  Created by Diego Flores Domenech on 4/1/20.
-//  Copyright © 2020 Diego Flores. All rights reserved.
+//  Created by Diego Flores Domenech on 4/14/20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
 import Foundation
-import UIKit
+import FlowEngine
 
 protocol NavigationAction : Action {
     init(navigationController: UINavigationController)

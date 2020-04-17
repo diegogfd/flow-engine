@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum RuleError : Error {
+public enum RuleError : Error {
     case invalidData
     case invalidOperation
     case notSatisfied(Rule)
 }
 
-enum BooleanOperator: String, Decodable {
+public enum BooleanOperator: String, Decodable {
     case equals
     case distinct
     case not
@@ -26,17 +26,17 @@ enum BooleanOperator: String, Decodable {
     case lessThanOrEqual
 }
 
-struct Rule: Decodable {
+public struct Rule: Decodable {
     
-    let ruleType: BooleanOperator
-    let value: RuleEvaluatable?
+    public let ruleType: BooleanOperator
+    public let value: RuleEvaluatable?
         
     enum CodingKeys: String, CodingKey {
         case ruleType
         case value
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.ruleType = try values.decode(BooleanOperator.self, forKey: .ruleType)
         let jsonValue = try values.decode(JSONValue.self, forKey: .value)

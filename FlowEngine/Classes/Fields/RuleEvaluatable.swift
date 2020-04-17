@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RuleEvaluatable {}
+public protocol RuleEvaluatable {}
 
 extension Int: RuleEvaluatable {}
 extension Double: RuleEvaluatable {}

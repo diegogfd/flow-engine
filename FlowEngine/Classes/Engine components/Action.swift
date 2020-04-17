@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol ActionAssociated {
+public protocol ActionAssociated {
     var action: Action { get }
 }
 
-enum ActionId: String {
-    case calculator
+public enum ActionId: String {
+    case amountDescriptionScreen
     case cardTypeSelection
     case installmentsSelection
 }
 
-protocol Action : class, FlowEngineComponent {
-    func execute()
+public protocol Action : class, FlowEngineComponent {
+    func execute(for fields: [FieldId])
     var id: ActionId { get }
     var fieldIds: [FieldId] { get }
 }

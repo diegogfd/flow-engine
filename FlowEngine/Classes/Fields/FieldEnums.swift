@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FieldId: String, MirrorableEnum, CaseIterable {
+public enum FieldId: String, MirrorableEnum, CaseIterable {
     case amount = "AMOUNT"
     case descr = "DESCRIPTION"
     case installments = "INSTALLMENTS"
@@ -22,6 +22,6 @@ enum FieldType: String {
     case bool
 }
 
-enum FieldValidationError : Error {
+public enum FieldValidationError : Error {
     case ruleErrors([RuleError])
 }

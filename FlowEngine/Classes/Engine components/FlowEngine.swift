@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol FlowEngineComponent {
+public protocol FlowEngineComponent {
     var flowEngine: FlowEngine! { get set }
 }
 
-class FlowEngine {
+public class FlowEngine {
     
     private let steps: [Step]
     private let actions: [Action]
@@ -27,7 +27,7 @@ class FlowEngine {
     }
     
     
-    init(stepsJSONData: Data, actionsJSONData: Data, actions: [Action]) {
+    public init(stepsJSONData: Data, actionsJSONData: Data, actions: [Action]) {
         let jsonDecoder = JSONDecoder()
         self.steps = try! jsonDecoder.decode([Step].self, from: stepsJSONData)
         self.activeActions = try! jsonDecoder.decode([ActionRepresentation].self, from: actionsJSONData)
@@ -44,6 +44,14 @@ class FlowEngine {
         if let nextStep = self.steps.first(where: {$0.canEnterToStep}) {
             self.currentStep = nextStep
         }
+    }
+    
+    public func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+        return self.currentStep.fulfillField(fieldId: fieldId, value: value)
+    }
+    
+    public func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+        return self.currentStep.evaluateField(fieldId: fieldId, value: value)
     }
     
     private func getBestActionIds() -> [ActionId] {
