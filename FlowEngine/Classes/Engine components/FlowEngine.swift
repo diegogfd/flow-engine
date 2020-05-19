@@ -46,13 +46,13 @@ public class FlowEngine {
         }
     }
     
-    public func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-        return self.currentStep.fulfillField(fieldId: fieldId, value: value)
-    }
-    
-    public func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-        return self.currentStep.evaluateField(fieldId: fieldId, value: value)
-    }
+//    public func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+//        return self.currentStep.fulfillField(fieldId: fieldId, value: value)
+//    }
+//
+//    public func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+//        return self.currentStep.evaluateField(fieldId: fieldId, value: value)
+//    }
     
     private func getBestActionIds() -> [ActionId] {
         var requiredFieldIds = self.currentStep.requiredFields

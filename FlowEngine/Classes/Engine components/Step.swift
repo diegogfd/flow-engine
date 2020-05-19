@@ -13,7 +13,7 @@ class Step: FlowEngineComponent, Decodable {
     let id: String
     let requiredFields: [FieldId]
     let optionalFields: [FieldId]
-    let enterRules: [FieldValidationData]
+    let rule: Rule
     
     var currentStepActions: [Action] = [] {
         didSet {
@@ -30,7 +30,7 @@ class Step: FlowEngineComponent, Decodable {
         case id
         case requiredFields = "required_fields"
         case optionalFields = "optional_fields"
-        case enterRules = "rules"
+        case rule = "rules"
     }
     
     required init(from decoder: Decoder) throws {
@@ -50,7 +50,7 @@ class Step: FlowEngineComponent, Decodable {
             }
             return field
         }
-        self.enterRules = try container.decode([FieldValidationData].self, forKey: .enterRules)
+        self.rule = try container.decode(Rule.self, forKey: .rule)
     }
     
     var fulfilledFields: [FieldId] = [] {
@@ -76,70 +76,42 @@ class Step: FlowEngineComponent, Decodable {
     }
     
     var canEnterToStep: Bool {
-        for fieldData in self.enterRules {
-            switch fieldData.type {
-            case .integer:
-                let field = IntField(fieldData: fieldData)
-                let result = field.evaluateRules(fieldValue: self.flowEngine.state.getFieldValue(id: fieldData.id) as? Int)
-                if case .failure(_) = result {
-                    return false
-                }
-            case .string:
-                let field = StringField(fieldData: fieldData)
-                let result = field.evaluateRules(fieldValue: self.flowEngine.state.getFieldValue(id: fieldData.id) as? String)
-                if case .failure(_) = result {
-                    return false
-                }
-            case .double:
-                let field = DoubleField(fieldData: fieldData)
-                let result = field.evaluateRules(fieldValue: self.flowEngine.state.getFieldValue(id: fieldData.id) as? Double)
-                if case .failure(_) = result {
-                    return false
-                }
-            case .bool:
-                let field = BoolField(fieldData: fieldData)
-                let result = field.evaluateRules(fieldValue: self.flowEngine.state.getFieldValue(id: fieldData.id) as? Bool)
-                if case .failure(_) = result {
-                    return false
-                }
-            }
-        }
-        return true
+        return self.rule.evaluate(state: self.flowEngine.state)
     }
     
-    private func fieldData(for id: FieldId) -> FieldValidationData? {
-        return self.enterRules.first(where: { $0.id == id})
-    }
-    
-    func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-        guard let fieldData = self.fieldData(for: fieldId) else {
-            return .failure(.ruleErrors([.invalidOperation]))
-        }
-        if let value = value as? Int {
-            let field = IntField(fieldData: fieldData)
-            return field.evaluateRules(fieldValue: value)
-        } else if let value = value as? Double {
-            let field = DoubleField(fieldData: fieldData)
-            return field.evaluateRules(fieldValue: value)
-        } else if let value = value as? String {
-            let field = StringField(fieldData: fieldData)
-            return field.evaluateRules(fieldValue: value)
-        } else if let value = value as? Bool {
-            let field = BoolField(fieldData: fieldData)
-            return field.evaluateRules(fieldValue: value)
-        }
-        return .failure(.ruleErrors([.invalidData]))
-    }
-
-    func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-        let result = self.evaluateField(fieldId: fieldId, value: value)
-        switch result {
-        case .success(_):
-            self.flowEngine.state.setField(id: fieldId, value: value)
-            self.fulfilledFields.append(fieldId)
-            return .success(true)
-        case .failure(let errors):
-            return .failure(errors)
-        }
-    }
+//    private func fieldData(for id: FieldId) -> FieldValidationData? {
+//        return self.rule.first(where: { $0.id == id})
+//    }
+//
+//    func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+//        guard let fieldData = self.fieldData(for: fieldId) else {
+//            return .failure(.ruleErrors([.invalidOperation]))
+//        }
+//        if let value = value as? Int {
+//            let field = IntField(fieldData: fieldData)
+//            return field.evaluateRules(fieldValue: value)
+//        } else if let value = value as? Double {
+//            let field = DoubleField(fieldData: fieldData)
+//            return field.evaluateRules(fieldValue: value)
+//        } else if let value = value as? String {
+//            let field = StringField(fieldData: fieldData)
+//            return field.evaluateRules(fieldValue: value)
+//        } else if let value = value as? Bool {
+//            let field = BoolField(fieldData: fieldData)
+//            return field.evaluateRules(fieldValue: value)
+//        }
+//        return .failure(.ruleErrors([.invalidData]))
+//    }
+//
+//    func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
+//        let result = self.evaluateField(fieldId: fieldId, value: value)
+//        switch result {
+//        case .success(_):
+//            self.flowEngine.state.setField(id: fieldId, value: value)
+//            self.fulfilledFields.append(fieldId)
+//            return .success(true)
+//        case .failure(let errors):
+//            return .failure(errors)
+//        }
+//    }
 }

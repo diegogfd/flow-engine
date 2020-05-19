@@ -8,20 +8,9 @@
 
 import Foundation
 
-public enum FieldId: String, MirrorableEnum, CaseIterable {
+public enum FieldId: String, MirrorableEnum, CaseIterable, Decodable {
     case amount = "AMOUNT"
     case descr = "DESCRIPTION"
     case installments = "INSTALLMENTS"
     case cardType = "CARD_TYPE"
-}
-
-enum FieldType: String {
-    case integer
-    case double
-    case string
-    case bool
-}
-
-public enum FieldValidationError : Error {
-    case ruleErrors([RuleError])
 }

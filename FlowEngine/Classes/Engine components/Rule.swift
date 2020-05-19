@@ -2,49 +2,74 @@
 //  Rule.swift
 //  FlowEngine
 //
-//  Created by Diego Flores Domenech on 3/29/20.
-//  Copyright © 2020 Diego Flores. All rights reserved.
+//  Created by Diego Flores Domenech on 5/19/20.
 //
 
 import Foundation
 
-public enum RuleError : Error {
-    case invalidData
-    case invalidOperation
-    case notSatisfied(Rule)
-}
-
-public enum BooleanOperator: String, Decodable {
-    case equals
-    case distinct
-    case not
-    case and
-    case or
-    case greaterThan
-    case lessThan
-    case greaterThanOrEqual
-    case lessThanOrEqual
-}
-
-public struct Rule: Decodable {
+struct Rule : Decodable {
     
-    public let ruleType: BooleanOperator
-    public let value: RuleEvaluatable?
-        
+    enum RuleType: String, Decodable {
+        case equals
+        case distinct
+        case not
+        case and
+        case or
+        case greaterThan
+        case lessThan
+        case greaterThanOrEqual
+        case lessThanOrEqual
+        case null
+        case notNull
+    }
+    
     enum CodingKeys: String, CodingKey {
-        case ruleType
+        case type
+        case fieldId = "field"
+        case valueType = "value_type"
         case value
+        case subRules = "rules"
+    }
+    
+    enum ValueType: String, Decodable {
+        case integer
+        case double
+        case string
+        case bool
+    }
+    
+    let type: RuleType
+    let fieldId: FieldId?
+    let valueType: ValueType?
+    let value: Any?
+    let subRules: [Rule]?
+    
+    private var evaluator: RuleEvaluator? {
+        guard let valueType = self.valueType else { return nil }
+        switch valueType {
+        case .integer:
+            return RuleEvaluatorInt()
+        case .double:
+            return RuleEvaluatorInt()
+        case .string:
+            return RuleEvaluatorInt()
+        case .bool:
+            return RuleEvaluatorInt()
+        }
     }
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.ruleType = try values.decode(BooleanOperator.self, forKey: .ruleType)
+        self.fieldId = try values.decode(FieldId.self, forKey: .fieldId)
+        self.type = try values.decode(RuleType.self, forKey: .type)
+        self.valueType = try values.decode(ValueType.self, forKey: .valueType)
         let jsonValue = try values.decode(JSONValue.self, forKey: .value)
-        self.value = jsonValue.value as? RuleEvaluatable
+        self.value = jsonValue.value
+        self.subRules = try values.decode([Rule].self, forKey: .subRules)
     }
     
-    init(ruleType: BooleanOperator, value: RuleEvaluatable?) {
-        self.ruleType = ruleType
-        self.value = value
+    func evaluate(state: FlowState) -> Bool {
+        return evaluator?.evaluate(rule: self, state: state) ?? false
     }
+    
 }
