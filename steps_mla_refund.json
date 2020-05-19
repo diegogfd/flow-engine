@@ -1,66 +1,66 @@
 {
-    "operation_type":"PRESENTIAL_REFUND",
+    "operation_type":"presential_refund",
     "steps":[
         {
-            "id":"REFUND_INTRO",
+            "id":"refund_intro",
             "required_fields":[
-                "AMOUNT",
-                "CARD_TOKEN_ID",
-                "PAYMENT_ID"
+                "amount",
+                "card_token_id",
+                "payment_id"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"PAIRING",
+            "id":"pairing",
             "required_fields":[
-                "POI",
-                "POI_TYPE"
+                "poi",
+                "poi_type"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"GET_WORKING_KEY",
+            "id":"get_working_key",
             "required_fields":[
-                "VALID_WORKING_KEY"
+                "working_key"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"POI_TYPE",
+                    "field_id":"poi_type",
                     "type":"string",
-                    "value":"NEWLAND"
+                    "value":"newland"
                 }
             }
         },
         {
-            "id":"READ_CARD",
+            "id":"read_card",
             "required_fields":[
-                "CARD_DATA"
+                "card_data"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"DO_PRESENTIAL_REFUND",
+            "id":"do_presential_refund",
             "required_fields":[
-                "REFUND_SUCCEEDED"
+                "refund_succeeded"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"CONGRATS",
+            "id":"congrats",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"REFUND_SUCCEEDED",
+                    "field_id":"refund_succeeded",
                     "type":"bool",
                     "value":true
                 }

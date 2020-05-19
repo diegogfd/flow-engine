@@ -1,113 +1,113 @@
 {
-    "operation_type":"CHARGE",
+    "operation_type":"charge",
     "steps":[
         {
-            "id":"SET_AMOUNT",
+            "id":"set_amount",
             "required_fields":[
-                "AMOUNT"
+                "amount"
             ],
             "optional_fields":[
-                "CART",
-                "DESCRIPTION"
+                "cart",
+                "description"
             ],
             "rules":null
         },
         {
-            "id":"SET_BUYER_EMAIL",
+            "id":"set_buyer_email",
             "required_fields":[
-                "BUYER_EMAIL"
+                "buyer_email"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"IS_RESERVATION",
+                    "field_id":"is_reservation",
                     "type":"bool",
                     "value":true
                 }
             }
         },
         {
-            "id":"SET_CHARGE_METHOD",
+            "id":"set_charge_method",
             "required_fields":[
-                "CHARGE_METHOD"
+                "charge_method"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"SET_CARD_TYPE",
+            "id":"set_card_type",
             "required_fields":[
-                "CARD_TYPE"
+                "card_type"
             ],
             "optional_fields":[
-                "INSTALLMENTS"
+                "installments"
             ],
             "rules":null
         },
         {
-            "id":"SET_INSTALLMENTS",
+            "id":"set_installments",
             "required_fields":[
-                "INSTALLMENTS"
-            ],
-            "optional_fields":null,
-            "rules":null
-        },
-        {
-            "id":"PAIRING",
-            "required_fields":[
-                "POI",
-                "POI_TYPE"
+                "installments"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"GET_WORKING_KEY",
+            "id":"pairing",
             "required_fields":[
-                "WORKING_KEY"
+                "poi",
+                "poi_type"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"READ_CARD",
+            "id":"get_working_key",
             "required_fields":[
-                "CARD_DATA"
+                "working_key"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"TOKENIZE_CARD",
+            "id":"read_card",
             "required_fields":[
-                "CARD_TOKEN",
-                "PAYMENT_METHOD"
+                "card_data"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"SET_CVV",
+            "id":"tokenize_card",
             "required_fields":[
-                "CVV"
+                "card_token",
+                "payment_method"
+            ],
+            "optional_fields":null,
+            "rules":null
+        },
+        {
+            "id":"set_cvv",
+            "required_fields":[
+                "cvv"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"OR",
+                "id":"or",
                 "value":[
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"CARD_DATA_ENTRY_MODE",
+                            "field_id":"card_data_entry_mode",
                             "type":"string",
-                            "value":"SWIPE"
+                            "value":"swipe"
                         }
                     },
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"ON_SITE_ALLOWED",
+                            "field_id":"on_site_allowed",
                             "type":"bool",
                             "value":true
                         }
@@ -116,36 +116,36 @@
             }
         },
         {
-            "id":"DO_PAYMENT",
+            "id":"post_payment",
             "required_fields":[
-                "CVV",
-                "PAYMENT"
+                "cvv",
+                "payment"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"EMV_FINISH_TRANSACTION",
+            "id":"emv_finish_transaction",
             "required_fields":[
-                "SENT_ADVICE",
-                "WAS_REVERSED"
+                "sent_advice",
+                "was_reversed"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"AND",
+                "id":"and",
                 "value":[
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"CARD_DATA_ENTRY_MODE",
+                            "field_id":"card_data_entry_mode",
                             "type":"string",
-                            "value":"CHIP"
+                            "value":"chip"
                         }
                     },
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"ON_SITE_ALLOWED",
+                            "field_id":"on_site_allowed",
                             "type":"bool",
                             "value":false
                         }
@@ -154,26 +154,26 @@
             }
         },
         {
-            "id":"SIGN",
+            "id":"sign",
             "required_fields":[
-                "SIGNATURE"
+                "signature"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"AND",
+                "id":"and",
                 "value":[
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"SIGNATURE_REQUIRED",
+                            "field_id":"signature_required",
                             "type":"bool",
                             "value":true
                         }
                     },
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"PAYMENT_STATUS",
+                            "field_id":"payment_status",
                             "type":"string",
                             "value":"approved"
                         }
@@ -182,38 +182,38 @@
             }
         },
         {
-            "id":"POST_NOTIFICATION",
+            "id":"post_notification",
             "required_fields":[
-                "NOTIFICATION"
+                "notification"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"CONGRATS",
+            "id":"congrats",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"PAYMENT_STATUS",
+                    "field_id":"payment_status",
                     "type":"string",
                     "value":"approved"
                 }
             }
         },
         {
-            "id":"PAYMENT_FAILED",
+            "id":"payment_failed",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"DISTINCT",
+                "id":"distinct",
                 "value":{
-                    "field_id":"PAYMENT_STATUS",
+                    "field_id":"payment_status",
                     "type":"string",
                     "value":"approved"
                 }
@@ -221,3 +221,5 @@
         }
     ]
 }
+
+

@@ -1,104 +1,104 @@
 {
-    "operation_type":"CHARGE",
+    "operation_type":"charge",
     "steps":[
         {
-            "id":"SET_AMOUNT",
+            "id":"set_amount",
             "required_fields":[
-                "AMOUNT"
+                "amount"
             ],
             "optional_fields":[
-                "CART",
-                "DESCRIPTION"
+                "cart",
+                "description"
             ],
             "rules":null
         },
         {
-            "id":"SET_CHARGE_METHOD",
+            "id":"set_charge_method",
             "required_fields":[
-                "CHARGE_METHOD"
-            ],
-            "optional_fields":null,
-            "rules":null
-        },
-        {
-            "id":"PAIRING",
-            "required_fields":[
-                "POI",
-                "POI_TYPE"
+                "charge_method"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"GET_WORKING_KEY",
+            "id":"pairing",
             "required_fields":[
-                "WORKING_KEY"
+                "poi",
+                "poi_type"
+            ],
+            "optional_fields":null,
+            "rules":null
+        },
+        {
+            "id":"get_working_key",
+            "required_fields":[
+                "working_key"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"POI_TYPE",
+                    "field_id":"poi_type",
                     "type":"string",
-                    "value":"NEWLAND"
+                    "value":"newland"
                 }
             }
         },
         {
-            "id":"READ_CARD",
+            "id":"read_card",
             "required_fields":[
-                "CARD_DATA"
+                "card_data"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"TOKENIZE_CARD",
+            "id":"tokenize_card",
             "required_fields":[
-                "CARD_TOKEN"
+                "card_token"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"SELECT_PAYMENT_METHOD",
+            "id":"select_payment_method",
             "required_fields":[
-                "PAYMENT_METHOD"
+                "payment_method"
             ],
             "optional_fields":[
-                "INSTALLMENTS"
+                "installments"
             ],
             "rules":null
         },
         {
-            "id":"SET_INSTALLMENTS",
+            "id":"set_installments",
             "required_fields":[
-                "INSTALLMENTS"
+                "installments"
             ],
             "optional_fields":null,
             "rules":null
         },
         {
-            "id":"DO_PAYMENT",
+            "id":"post_payment",
             "required_fields":[
-                "PAYMENT"
+                "payment"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"AND",
+                "id":"and",
                 "value":[
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"CARD_DATA_ENTRY_MODE",
+                            "field_id":"card_data_entry_mode",
                             "type":"string",
-                            "value":"CHIP"
+                            "value":"chip"
                         }
                     },
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"IS_TESTING_CHARGE",
+                            "field_id":"is_testing_charge",
                             "type":"bool",
                             "value":false
                         }
@@ -107,25 +107,25 @@
             }
         },
         {
-            "id":"EMV_FINISH_TRANSACTION",
+            "id":"emv_finish_transaction",
             "required_fields":[
-                "SENT_ADVICE",
-                "WAS_REVERSED"
+                "sent_advice",
+                "was_reversed"
             ],
             "optional_fields":null,
             "rules":[
                 {
-                    "id":"EQUALS",
+                    "id":"equals",
                     "value":{
-                        "field_id":"CARD_DATA_ENTRY_MODE",
+                        "field_id":"card_data_entry_mode",
                         "type":"string",
-                        "value":"CHIP"
+                        "value":"chip"
                     }
                 },
                 {
-                    "id":"EQUALS",
+                    "id":"equals",
                     "value":{
-                        "field_id":"IS_TESTING_CHARGE",
+                        "field_id":"is_testing_charge",
                         "type":"bool",
                         "value":false
                     }
@@ -133,71 +133,71 @@
             ]
         },
         {
-            "id":"SET_CVV",
+            "id":"set_cvv",
             "required_fields":[
-                "CVV"
+                "cvv"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"CARD_DATA_ENTRY_MODE",
+                    "field_id":"card_data_entry_mode",
                     "type":"string",
-                    "value":"SWIPE"
+                    "value":"swipe"
                 }
             }
         },
         {
-            "id":"SET_IDENTIFICATION",
+            "id":"set_identification",
             "required_fields":[
-                "IDENTIFICATION"
+                "identification"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "value":"SWIPE",
-                    "field_id":"CARD_DATA_ENTRY_MODE",
+                    "value":"swipe",
+                    "field_id":"card_data_entry_mode",
                     "type":"string"
                 }
             }
         },
         {
-            "id":"DO_PAYMENT",
+            "id":"do_payment",
             "required_fields":[
-                "PAYMENT"
+                "payment"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"IS_TESTING_CHARGE",
+                    "field_id":"is_testing_charge",
                     "type":"bool",
                     "value":false
                 }
             }
         },
         {
-            "id":"SIGN",
+            "id":"sign",
             "required_fields":[
-                "SIGNATURE"
+                "signature"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"OR",
+                "id":"or",
                 "value":[
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"PAYMENT_STATUS",
+                            "field_id":"payment_status",
                             "type":"string",
                             "value":"approved"
                         }
                     },
                     {
-                        "id":"EQUALS",
+                        "id":"equals",
                         "value":{
-                            "field_id":"IS_TESTING_CHARGE",
+                            "field_id":"is_testing_charge",
                             "type":"bool",
                             "value":true
                         }
@@ -206,60 +206,60 @@
             }
         },
         {
-            "id":"POST_NOTIFICATION",
+            "id":"post_notification",
             "required_fields":[
-                "NOTIFICATION"
+                "notification"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"IS_TESTING_CHARGE",
+                    "field_id":"is_testing_charge",
                     "type":"bool",
                     "value":false
                 }
             }
         },
         {
-            "id":"CONGRATS",
+            "id":"congrats",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"PAYMENT_STATUS",
+                    "field_id":"payment_status",
                     "type":"string",
                     "value":"approved"
                 }
             }
         },
         {
-            "id":"PAYMENT_FAILED",
+            "id":"payment_failed",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"DISTINCT",
+                "id":"distinct",
                 "value":{
-                    "field_id":"PAYMENT_STATUS",
+                    "field_id":"payment_status",
                     "type":"string",
                     "value":"approved"
                 }
             }
         },
         {
-            "id":"CONGRATS_TESTING_CHARGE",
+            "id":"congrats_testing_charge",
             "required_fields":[
-                "SHOWED_PAYMENT_RESULT"
+                "showed_payment_result"
             ],
             "optional_fields":null,
             "rules":{
-                "id":"EQUALS",
+                "id":"equals",
                 "value":{
-                    "field_id":"IS_TESTING_CHARGE",
+                    "field_id":"is_testing_charge",
                     "type":"bool",
                     "value":true
                 }
@@ -267,3 +267,4 @@
         }
     ]
 }
+
