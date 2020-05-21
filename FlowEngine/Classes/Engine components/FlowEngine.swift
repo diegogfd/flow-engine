@@ -46,20 +46,36 @@ public class FlowEngine {
         }
     }
     
-    func updateFlowState(fieldId: FieldId, value: Any?) {
-        self.state.setField(id: fieldId, value: value)
-        self.currentStep.fulfilledFields.append(fieldId)
+    @discardableResult
+    func updateFlowState(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
+        let result = self.validateAttributes(attributes: attributes)
+        if case .success(()) = result {
+            self.state.setAttributes(attributes)
+            self.currentStep.fulfilledFields.append(contentsOf: attributes.map({$0.fieldId}))
+        }
+        return result
     }
     
-    func evaluateFlowStateUpdate(fieldId: FieldId, value: Any?) {
-        let validationsForField = self.validations.filter({ $0.fieldId == fieldId})
-        for validation in validationsForField {
-            let result = validation.rule.evaluate(value: value)
-            if !result {
-//                self.currentStep.currentAction?.resolveUnfulfilledValidation(validation: validation)
-                return
+    @discardableResult
+    func updateFlowState(fieldId: FieldId, value: Any?) -> Result<Void,FieldValidationError> {
+        return self.updateFlowState(attributes: [Attribute(fieldId: fieldId, value: value)])
+    }
+    
+    func validateAttributes(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
+        var failedValidations: [FieldValidation] = []
+        for attribute in attributes {
+            let validationsForField = self.validations.filter({ $0.fieldId == attribute.fieldId})
+            for validation in validationsForField {
+                let result = validation.rule.evaluate(value: attribute.value)
+                if !result{
+                    failedValidations.append(validation)
+                }
             }
         }
+        if failedValidations.isEmpty {
+            return .success(())
+        }
+        return .failure(.failed(failedValidations))
     }
     
     private func getBestActionIds() -> [ActionId] {

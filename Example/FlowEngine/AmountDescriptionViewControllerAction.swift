@@ -9,21 +9,21 @@
 import Foundation
 import FlowEngine
 
-class AmountDescriptionViewControllerAction: NavigationAction {
-    
-    var id: ActionId = .amountDescriptionScreen
-    var fieldIds: [FieldId] = [.amount, .descr]
-    var flowEngine: FlowEngine!
-    var enabledFieldIds: [FieldId] = []
-    
-    private let navigationController: UINavigationController
-    
-    required init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
-    func execute(for fields: [FieldId]) {
-        self.enabledFieldIds = fields
-    }
-    
-}
+//class AmountDescriptionViewControllerAction: NavigationAction {
+//    
+//    var id: ActionId = .amountDescriptionScreen
+//    var fieldIds: [FieldId] = [.amount, .descr]
+//    var flowEngine: FlowEngine!
+//    var enabledFieldIds: [FieldId] = []
+//    
+//    private let navigationController: UINavigationController
+//    
+//    required init(navigationController: UINavigationController) {
+//        self.navigationController = navigationController
+//    }
+//    
+//    func execute(for fields: [FieldId]) {
+//        self.enabledFieldIds = fields
+//    }
+//    
+//}

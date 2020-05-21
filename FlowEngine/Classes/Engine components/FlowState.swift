@@ -20,6 +20,10 @@ class FlowState: NSObject {
     private(set) var cardType: CardType?
     private(set) var cart: [Cart]?
     
+    func setAttributes(_ attributes: [Attribute]) {
+        attributes.forEach({self.setField(id: $0.fieldId, value: $0.value)})
+    }
+    
     func setField(id: FieldId, value: Any?) {
         let propName = id.mirror.label
         let mirror = Mirror(reflecting: self)

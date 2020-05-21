@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RuleEvaluatorString : RuleEvaluatorImpl {
+struct RuleEvaluatorString : SimpleRuleEvaluator {
     
     typealias T = String
     

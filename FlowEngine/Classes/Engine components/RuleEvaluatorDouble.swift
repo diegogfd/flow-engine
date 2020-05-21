@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RuleEvaluatorDouble : RuleEvaluatorImpl {
+struct RuleEvaluatorDouble : SimpleRuleEvaluator {
     
     typealias T = Double
     

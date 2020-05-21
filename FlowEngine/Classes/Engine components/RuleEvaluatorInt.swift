@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RuleEvaluatorInt : RuleEvaluatorImpl {
+struct RuleEvaluatorInt : SimpleRuleEvaluator {
     
     typealias T = Int
     

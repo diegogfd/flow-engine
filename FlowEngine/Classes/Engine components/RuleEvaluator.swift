@@ -11,7 +11,7 @@ protocol RuleEvaluator {
     func evaluate(rule: Rule, value: Any?) -> Bool
 }
 
-protocol RuleEvaluatorImpl: RuleEvaluator {
+protocol SimpleRuleEvaluator: RuleEvaluator {
     
     associatedtype T
         
@@ -23,7 +23,7 @@ protocol RuleEvaluatorImpl: RuleEvaluator {
     func distinct(left: T, right: T) -> Bool
 }
 
-extension RuleEvaluatorImpl {
+extension SimpleRuleEvaluator {
     
     func evaluate(rule: Rule, value: Any?) -> Bool {
         guard let ruleValue = rule.value as? T else {

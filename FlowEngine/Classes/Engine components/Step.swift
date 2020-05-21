@@ -13,7 +13,7 @@ class Step: FlowEngineComponent, Decodable {
     let id: String
     let requiredFields: [FieldId]
     let optionalFields: [FieldId]
-    let rule: Rule
+    let rule: Rule?
     
     var currentStepActions: [Action] = [] {
         didSet {
@@ -77,7 +77,16 @@ class Step: FlowEngineComponent, Decodable {
     }
     
     var canEnterToStep: Bool {
-        return self.rule.evaluate(state: self.flowEngine.state)
+        if let rule = rule {
+            return rule.evaluate(state: self.flowEngine.state)
+        }
+        for field in requiredFields {
+            let fieldValue = flowEngine.state.getFieldValue(id: field)
+            if fieldValue == nil {
+                return true
+            }
+        }
+        return false
     }
     
 }

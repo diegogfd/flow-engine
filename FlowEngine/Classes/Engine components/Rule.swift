@@ -44,17 +44,20 @@ struct Rule : Decodable {
     let value: Any?
     let subRules: [Rule]?
     
-    private var evaluator: RuleEvaluator? {
-        guard let valueType = self.valueType else { return nil }
-        switch valueType {
-        case .integer:
-            return RuleEvaluatorInt()
-        case .double:
-            return RuleEvaluatorDouble()
-        case .string:
-            return RuleEvaluatorString()
-        case .bool:
-            return RuleEvaluatorBool()
+    private var evaluator: RuleEvaluator {
+        if let valueType = valueType {
+            switch valueType {
+            case .integer:
+                return RuleEvaluatorInt()
+            case .double:
+                return RuleEvaluatorDouble()
+            case .string:
+                return RuleEvaluatorString()
+            case .bool:
+                return RuleEvaluatorBool()
+            }
+        } else {
+            return ComplexRuleEvaluator()
         }
     }
     
@@ -77,7 +80,16 @@ struct Rule : Decodable {
     }
     
     func evaluate(value: Any?) -> Bool {
-        return evaluator?.evaluate(rule: self, value: value) ?? false
+        return evaluator.evaluate(rule: self, value: value)
+    }
+    
+    func getFailingRules(value: Any?) -> [Rule]? {
+        if let subRules = subRules {
+            return subRules.filter({!$0.evaluate(value: value)})
+        } else if !self.evaluate(value: value) {
+            return [self]
+        }
+        return nil
     }
     
 }

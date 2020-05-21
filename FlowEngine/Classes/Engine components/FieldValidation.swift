@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum FieldValidationError : Error {
+    case failed([FieldValidation])
+}
+
 public struct FieldValidation : Decodable {
     
     let id: String
