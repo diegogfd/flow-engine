@@ -50,11 +50,11 @@ struct Rule : Decodable {
         case .integer:
             return RuleEvaluatorInt()
         case .double:
-            return RuleEvaluatorInt()
+            return RuleEvaluatorDouble()
         case .string:
-            return RuleEvaluatorInt()
+            return RuleEvaluatorString()
         case .bool:
-            return RuleEvaluatorInt()
+            return RuleEvaluatorBool()
         }
     }
     
@@ -69,7 +69,15 @@ struct Rule : Decodable {
     }
     
     func evaluate(state: FlowState) -> Bool {
-        return evaluator?.evaluate(rule: self, state: state) ?? false
+        guard let fieldId = self.fieldId else {
+            return false
+        }
+        let value = state.getFieldValue(id: fieldId)
+        return self.evaluate(value: value)
+    }
+    
+    func evaluate(value: Any?) -> Bool {
+        return evaluator?.evaluate(rule: self, value: value) ?? false
     }
     
 }

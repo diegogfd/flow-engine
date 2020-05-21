@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FieldValidation : Decodable {
+public struct FieldValidation : Decodable {
     
     let id: String
     let fieldId: FieldId

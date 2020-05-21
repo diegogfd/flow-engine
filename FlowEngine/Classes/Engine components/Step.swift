@@ -71,6 +71,7 @@ class Step: FlowEngineComponent, Decodable {
             }
         }
     }
+    
     var allFields: [FieldId] {
         return self.requiredFields + self.optionalFields
     }
@@ -79,39 +80,4 @@ class Step: FlowEngineComponent, Decodable {
         return self.rule.evaluate(state: self.flowEngine.state)
     }
     
-//    private func fieldData(for id: FieldId) -> FieldValidationData? {
-//        return self.rule.first(where: { $0.id == id})
-//    }
-//
-//    func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-//        guard let fieldData = self.fieldData(for: fieldId) else {
-//            return .failure(.ruleErrors([.invalidOperation]))
-//        }
-//        if let value = value as? Int {
-//            let field = IntField(fieldData: fieldData)
-//            return field.evaluateRules(fieldValue: value)
-//        } else if let value = value as? Double {
-//            let field = DoubleField(fieldData: fieldData)
-//            return field.evaluateRules(fieldValue: value)
-//        } else if let value = value as? String {
-//            let field = StringField(fieldData: fieldData)
-//            return field.evaluateRules(fieldValue: value)
-//        } else if let value = value as? Bool {
-//            let field = BoolField(fieldData: fieldData)
-//            return field.evaluateRules(fieldValue: value)
-//        }
-//        return .failure(.ruleErrors([.invalidData]))
-//    }
-//
-//    func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-//        let result = self.evaluateField(fieldId: fieldId, value: value)
-//        switch result {
-//        case .success(_):
-//            self.flowEngine.state.setField(id: fieldId, value: value)
-//            self.fulfilledFields.append(fieldId)
-//            return .success(true)
-//        case .failure(let errors):
-//            return .failure(errors)
-//        }
-//    }
 }

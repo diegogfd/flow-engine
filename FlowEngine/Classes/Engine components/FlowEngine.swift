@@ -17,6 +17,7 @@ public class FlowEngine {
     private let steps: [Step]
     private let actions: [Action]
     private let activeActions: [ActionRepresentation]
+    private let validations: [FieldValidation] = []
     let state: FlowState = FlowState()
 
     var currentStep: Step! {
@@ -25,7 +26,6 @@ public class FlowEngine {
             self.currentStep?.currentStepActions = self.actions.filter({bestActionIds.contains($0.id)})
         }
     }
-    
     
     public init(stepsJSONData: Data, actionsJSONData: Data, actions: [Action]) {
         let jsonDecoder = JSONDecoder()
@@ -46,13 +46,21 @@ public class FlowEngine {
         }
     }
     
-//    public func fulfillField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-//        return self.currentStep.fulfillField(fieldId: fieldId, value: value)
-//    }
-//
-//    public func evaluateField(fieldId: FieldId, value: RuleEvaluatable?) -> Result<Bool,FieldValidationError> {
-//        return self.currentStep.evaluateField(fieldId: fieldId, value: value)
-//    }
+    func updateFlowState(fieldId: FieldId, value: Any?) {
+        self.state.setField(id: fieldId, value: value)
+        self.currentStep.fulfilledFields.append(fieldId)
+    }
+    
+    func evaluateFlowStateUpdate(fieldId: FieldId, value: Any?) {
+        let validationsForField = self.validations.filter({ $0.fieldId == fieldId})
+        for validation in validationsForField {
+            let result = validation.rule.evaluate(value: value)
+            if !result {
+//                self.currentStep.currentAction?.resolveUnfulfilledValidation(validation: validation)
+                return
+            }
+        }
+    }
     
     private func getBestActionIds() -> [ActionId] {
         var requiredFieldIds = self.currentStep.requiredFields

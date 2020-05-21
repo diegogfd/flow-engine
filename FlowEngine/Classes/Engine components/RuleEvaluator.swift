@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RuleEvaluator {
-    func evaluate(rule: Rule, state: FlowState) -> Bool
+    func evaluate(rule: Rule, value: Any?) -> Bool
 }
 
 protocol RuleEvaluatorImpl: RuleEvaluator {
@@ -25,31 +25,31 @@ protocol RuleEvaluatorImpl: RuleEvaluator {
 
 extension RuleEvaluatorImpl {
     
-    func evaluate(rule: Rule, state: FlowState) -> Bool {
-        guard let fieldId = rule.fieldId, let ruleValue = rule.value as? T else {
+    func evaluate(rule: Rule, value: Any?) -> Bool {
+        guard let ruleValue = rule.value as? T else {
             return false
         }
         if rule.type == .null {
-            return state.getFieldValue(id: fieldId) == nil
+            return value == nil
         } else if rule.type == .notNull {
-            return state.getFieldValue(id: fieldId) != nil
+            return value != nil
         }
-        guard let stateValue = state.getFieldValue(id: fieldId) as? T else {
+        guard let value = value as? T else {
             return false
         }
         switch rule.type {
         case .greaterThan:
-            return self.greaterThan(left: stateValue, right: ruleValue)
+            return self.greaterThan(left: value, right: ruleValue)
         case .greaterThanOrEqual:
-            return self.greaterThanOrEqual(left: stateValue, right: ruleValue)
+            return self.greaterThanOrEqual(left: value, right: ruleValue)
         case .lessThan:
-            return self.lessThan(left: stateValue, right: ruleValue)
+            return self.lessThan(left: value, right: ruleValue)
         case .lessThanOrEqual:
-            return self.lessThanOrEqual(left: stateValue, right: ruleValue)
+            return self.lessThanOrEqual(left: value, right: ruleValue)
         case .equals:
-            return self.equals(left: stateValue, right: ruleValue)
+            return self.equals(left: value, right: ruleValue)
         case .distinct:
-            return self.distinct(left: stateValue, right: ruleValue)
+            return self.distinct(left: value, right: ruleValue)
         default:
             return false
         }
