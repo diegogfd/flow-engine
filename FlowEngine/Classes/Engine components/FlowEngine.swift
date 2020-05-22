@@ -14,10 +14,10 @@ public protocol FlowEngineComponent {
 
 public class FlowEngine {
     
-    private let steps: [Step]
-    private let actions: [Action]
-    private let activeActions: [ActionRepresentation]
-    private let validations: [FieldValidation] = []
+    private var steps: [Step] = []
+    private var actions: [Action] = []
+    private var activeActions: [ActionRepresentation] = []
+    private var validations: [FieldValidation] = []
     let state: FlowState = FlowState()
 
     var currentStep: Step! {
@@ -27,17 +27,31 @@ public class FlowEngine {
         }
     }
     
-    public init(stepsJSONData: Data, actionsJSONData: Data, actions: [Action]) {
-        let jsonDecoder = JSONDecoder()
-        self.steps = try! jsonDecoder.decode([Step].self, from: stepsJSONData)
-        self.activeActions = try! jsonDecoder.decode([ActionRepresentation].self, from: actionsJSONData)
+    init(actions: [Action]) {
         self.actions = actions
-        self.steps.forEach({$0.flowEngine = self})
         self.actions.forEach({
             var action = $0
             action.flowEngine = self
         })
-        self.goToNextStep()
+    }
+    
+    public func fetch() {
+        guard let stepsFile = Bundle.main.url(forResource: "steps", withExtension: "json"), let actionsFile = Bundle.main.url(forResource: "actions", withExtension: "json") else {
+            return
+        }
+
+        do {
+            let stepsData = try Data(contentsOf: stepsFile)
+            let stepsResponse = try JSONDecoder().decode(StepsResponse.self, from: stepsData)
+            self.steps = stepsResponse.steps
+            self.steps.forEach({$0.flowEngine = self})
+            self.validations = stepsResponse.validations
+            
+            let actionsData = try Data(contentsOf: actionsFile)
+            self.activeActions = try JSONDecoder().decode([ActionRepresentation].self, from: actionsData)
+        } catch {
+            print("Bad JSON format")
+        }
     }
     
     func goToNextStep() {
