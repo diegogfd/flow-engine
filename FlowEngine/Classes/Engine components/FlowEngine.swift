@@ -82,10 +82,9 @@ public class FlowEngine {
         var requiredFieldIds = self.currentStep.requiredFields
         var optionalFieldIds = self.currentStep.optionalFields
         var bestActions: [ActionRepresentation] = []
-        while let fieldId = requiredFieldIds.first {
-            var candidateActions = self.activeActions.filter({$0.fieldIds.contains(fieldId)})
+        while !requiredFieldIds.isEmpty {
             //filtro las que tengan más campos requeridos
-            candidateActions = self.filterCandidateActions(candidateActions, by: requiredFieldIds)
+            var candidateActions = self.filterCandidateActions(self.activeActions, by: requiredFieldIds)
             //filtro las que tengan más campos opcionales
             candidateActions = self.filterCandidateActions(candidateActions, by: optionalFieldIds)
             //filtro las que tengan menos de otros fields
@@ -96,21 +95,20 @@ public class FlowEngine {
                 optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
             } else {
                 // no deberia entrar acá, porque sino nunca vas a poder salir del step
-                requiredFieldIds.removeAll(where: {$0 == fieldId})
+                requiredFieldIds.removeAll()
             }
         }
         //si quedan campos opcionales, repito el procedimiento, pueden no cumplirse todos
-        while let fieldId = optionalFieldIds.first {
-            var candidateActions = self.activeActions.filter({$0.fieldIds.contains(fieldId)})
+        while !optionalFieldIds.isEmpty {
             //filtro las que tengan más campos opcionales
-            candidateActions = self.filterCandidateActions(candidateActions, by: optionalFieldIds)
+            var candidateActions = self.filterCandidateActions(self.activeActions, by: optionalFieldIds)
             //filtro las que tengan menos de otros fields
             candidateActions = self.filterCandidateActions(candidateActions, byDistinct: optionalFieldIds)
             if let selectedAction = candidateActions.first {
                 bestActions.append(selectedAction)
                 optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
             } else {
-                optionalFieldIds.removeAll(where: {$0 == fieldId})
+                optionalFieldIds.removeAll()
             }
         }
         return bestActions.map({$0.id})
