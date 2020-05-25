@@ -1,0 +1,32 @@
+[
+    {
+        "name": "simple_calculator",
+        "fields": [
+            "amount",
+        ]
+    },
+    {
+        "name": "description_dialog",
+        "fields": [
+            "description"
+        ]
+    },
+    {
+        "name": "card_type_random",
+        "fields": [
+            "installments"
+        ]
+    },
+    {
+        "name": "installments_screen",
+        "fields": [
+            "installments"
+        ]
+    },
+    {
+        "name": "simple_congrats",
+        "fields": [
+            "is_finished"
+        ]
+    }
+]

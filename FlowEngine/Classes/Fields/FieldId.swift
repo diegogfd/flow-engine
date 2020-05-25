@@ -9,8 +9,9 @@
 import Foundation
 
 public enum FieldId: String, MirrorableEnum, CaseIterable, Decodable {
-    case amount = "AMOUNT"
-    case descr = "DESCRIPTION"
-    case installments = "INSTALLMENTS"
-    case cardType = "CARD_TYPE"
+    case amount
+    case descr = "description"
+    case installments
+    case cardType = "card_type"
+    case showedPaymentResult = "showed_payment_result"
 }

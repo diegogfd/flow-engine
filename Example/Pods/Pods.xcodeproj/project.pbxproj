@@ -98,7 +98,7 @@
 		BB215C5B5C5D98B681CCC228F8A74AF1 /* Pods-FlowEngine_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FlowEngine_Example-umbrella.h"; sourceTree = "<group>"; };
 		BC31A4A7A556FCF56ADE7767A8FA5849 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BEF3481CB979CF4379ACF9E8A0DB35FD /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		C32BA63F0774BCA614B914AFDC030564 /* actions.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = actions.json; path = FlowEngine/Assets/actions.json; sourceTree = "<group>"; };
+		C32BA63F0774BCA614B914AFDC030564 /* actions.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = actions.json; path = Example/FlowEngine/actions.json; sourceTree = "<group>"; };
 		CA91346D26F215CADAB4B71A8440AE35 /* Pods-FlowEngine_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FlowEngine_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CAA2FB79087A6413F5AE94EEFC146EA4 /* Pods_FlowEngine_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowEngine_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF5511580DB87EE9A7E49E827DE537E7 /* FlowEngine-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FlowEngine-Info.plist"; sourceTree = "<group>"; };

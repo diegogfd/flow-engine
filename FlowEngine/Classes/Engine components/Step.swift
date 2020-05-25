@@ -15,9 +15,9 @@ class Step: FlowEngineComponent, Decodable {
     let optionalFields: [FieldId]
     let rule: Rule?
     
-    var currentStepActions: [Action] = [] {
+    var actions: [Action] = [] {
         didSet {
-            self.currentAction = self.currentStepActions.first
+            self.currentAction = self.actions.first
         }
     }
     var currentAction: Action? {
@@ -53,23 +53,12 @@ class Step: FlowEngineComponent, Decodable {
         self.rule = try container.decode(Rule.self, forKey: .rule)
     }
     
-    var fulfilledFields: [FieldId] = [] {
-        didSet {
-            guard let currentAction = self.currentAction else {
-                return
-            }
-            let actionFieldsSet = Set(arrayLiteral: currentAction.fieldIds)
-            let fulfilledFieldsSet = Set(arrayLiteral: self.fulfilledFields)
-            if actionFieldsSet.isSubset(of: fulfilledFieldsSet) {
-                //la accion ya completo todos sus campos
-                self.currentStepActions.removeFirst()
-                self.currentAction = self.currentStepActions.first
-            }
-            if self.currentAction == nil {
-                //no tengo más acciones, deberia avanzar al next step
-                self.flowEngine.goToNextStep()
-            }
-        }
+    var fulfilledFields: [FieldId] = []
+    
+    var isFulfilled: Bool {
+        let fulfilledFieldsSet = Set(arrayLiteral: self.fulfilledFields)
+        let requiredFieldsSet = Set(arrayLiteral: self.requiredFields)
+        return requiredFieldsSet.isSubset(of: fulfilledFieldsSet)
     }
     
     var allFields: [FieldId] {
@@ -87,6 +76,11 @@ class Step: FlowEngineComponent, Decodable {
             }
         }
         return false
+    }
+    
+    func executeNextAction() {
+        self.actions.removeFirst()
+        self.currentAction = self.actions.first
     }
     
 }

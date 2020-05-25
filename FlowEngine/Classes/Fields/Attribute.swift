@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Attribute {
+public struct Attribute {
     let fieldId: FieldId
     let value: Any?
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CardType: String {
+public enum CardType: String {
     case credit = "credit_card"
     case debit = "debit_card"
 }
@@ -19,6 +19,7 @@ class FlowState: NSObject {
     private(set) var installments: [Int]?
     private(set) var cardType: CardType?
     private(set) var cart: [Cart]?
+    private(set) var showedPaymentResult = false
     
     func setAttributes(_ attributes: [Attribute]) {
         attributes.forEach({self.setField(id: $0.fieldId, value: $0.value)})

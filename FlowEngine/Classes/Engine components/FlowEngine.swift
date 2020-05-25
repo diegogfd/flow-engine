@@ -22,8 +22,8 @@ public class FlowEngine {
 
     var currentStep: Step! {
         didSet {
-            let bestActionIds = self.getBestActionIds()
-            self.currentStep?.currentStepActions = self.actions.filter({bestActionIds.contains($0.id)})
+            let actionIds = self.getActionIds()
+            self.currentStep?.actions = self.actions.filter({actionIds.contains($0.id)})
         }
     }
     
@@ -54,14 +54,8 @@ public class FlowEngine {
         }
     }
     
-    func goToNextStep() {
-        if let nextStep = self.steps.first(where: {$0.canEnterToStep}) {
-            self.currentStep = nextStep
-        }
-    }
-    
     @discardableResult
-    func updateFlowState(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
+    public func updateFlowState(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
         let result = self.validateAttributes(attributes: attributes)
         if case .success(()) = result {
             self.state.setAttributes(attributes)
@@ -71,11 +65,11 @@ public class FlowEngine {
     }
     
     @discardableResult
-    func updateFlowState(fieldId: FieldId, value: Any?) -> Result<Void,FieldValidationError> {
+    public func updateFlowState(fieldId: FieldId, value: Any?) -> Result<Void,FieldValidationError> {
         return self.updateFlowState(attributes: [Attribute(fieldId: fieldId, value: value)])
     }
     
-    func validateAttributes(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
+    public func validateAttributes(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
         var failedValidations: [FieldValidation] = []
         for attribute in attributes {
             let validationsForField = self.validations.filter({ $0.fieldId == attribute.fieldId})
@@ -92,61 +86,37 @@ public class FlowEngine {
         return .failure(.failed(failedValidations))
     }
     
-    private func getBestActionIds() -> [ActionId] {
-        var requiredFieldIds = self.currentStep.requiredFields
-        var optionalFieldIds = self.currentStep.optionalFields
-        var bestActions: [ActionRepresentation] = []
-        while !requiredFieldIds.isEmpty {
-            //filtro las que tengan más campos requeridos
-            var candidateActions = self.filterCandidateActions(self.activeActions, by: requiredFieldIds)
-            //filtro las que tengan más campos opcionales
-            candidateActions = self.filterCandidateActions(candidateActions, by: optionalFieldIds)
-            //filtro las que tengan menos de otros fields
-            candidateActions = self.filterCandidateActions(candidateActions, byDistinct: requiredFieldIds + optionalFieldIds)
-            if let selectedAction = candidateActions.first {
-                bestActions.append(selectedAction)
-                requiredFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
-                optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
-            } else {
-                // no deberia entrar acá, porque sino nunca vas a poder salir del step
-                requiredFieldIds.removeAll()
+    public func goNext() {
+        if self.currentStep.isFulfilled, self.actions.isEmpty {
+            self.goToNextStep()
+        } else {
+            guard let currentAction = self.currentStep.currentAction else {
+                return
+            }
+            //antes de salir de la acción, vuelvo a verificar que haya seteado todos los campos requeridos
+            let currentActionRequiredFields = self.currentStep.requiredFields.filter({ currentAction.fieldIds.contains($0)})
+            let actionFieldsSet = Set(arrayLiteral: currentActionRequiredFields)
+            let fulfilledFieldsSet = Set(arrayLiteral: self.currentStep.fulfilledFields)
+            if actionFieldsSet.isSubset(of: fulfilledFieldsSet) {
+                self.currentStep.executeNextAction()
             }
         }
-        //si quedan campos opcionales, repito el procedimiento, pueden no cumplirse todos
-        while !optionalFieldIds.isEmpty {
-            //filtro las que tengan más campos opcionales
-            var candidateActions = self.filterCandidateActions(self.activeActions, by: optionalFieldIds)
-            //filtro las que tengan menos de otros fields
-            candidateActions = self.filterCandidateActions(candidateActions, byDistinct: optionalFieldIds)
-            if let selectedAction = candidateActions.first {
-                bestActions.append(selectedAction)
-                optionalFieldIds.removeAll(where: {selectedAction.fieldIds.contains($0)})
-            } else {
-                optionalFieldIds.removeAll()
-            }
-        }
-        return bestActions.map({$0.id})
     }
     
-    private func filterCandidateActions(_ candidateActions: [ActionRepresentation], by fields: [FieldId]) -> [ActionRepresentation]  {
-        var candidateActions = candidateActions
-        let requiredFieldsSatisfied = candidateActions.compactMap({$0.fieldIds.filter({fields.contains($0)}).count})
-        for (index, numberOfFields) in requiredFieldsSatisfied.enumerated() {
-            if numberOfFields != requiredFieldsSatisfied.max() {
-                candidateActions.remove(at: index)
-            }
+    private func goToNextStep() {
+        if let nextStep = self.steps.first(where: {$0.canEnterToStep}) {
+            self.currentStep = nextStep
         }
-        return candidateActions
     }
     
-    private func filterCandidateActions(_ candidateActions: [ActionRepresentation], byDistinct fields: [FieldId]) -> [ActionRepresentation]  {
-        var candidateActions = candidateActions
-        let requiredFieldsSatisfied = candidateActions.compactMap({$0.fieldIds.filter({!fields.contains($0)}).count})
-        for (index, numberOfFields) in requiredFieldsSatisfied.enumerated() {
-            if numberOfFields != requiredFieldsSatisfied.min() {
-                candidateActions.remove(at: index)
+    private func getActionIds() -> [ActionId] {
+        self.activeActions.filter { (action) -> Bool in
+            for fieldId in action.fieldIds {
+                if self.currentStep.allFields.contains(fieldId) {
+                    return true
+                }
             }
-        }
-        return candidateActions
+            return false
+        }.map({$0.id})
     }
 }
