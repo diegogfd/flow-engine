@@ -24,18 +24,19 @@ class DescriptionDialogAction : NavigationAction {
                 return
             }
             let description = alertController.textFields?.first?.text
-            self.flowEngine.updateFlowState(fieldId: .descr, value: description)
+            self.flowEngine.updateFlowState(fieldId: .description, value: description)
             self.navigationController.dismiss(animated: true) { [weak self] in
                 self?.flowEngine.goNext()
             }
         }
         alertController.addAction(alertAction)
+        self.navigationController.present(alertController, animated: true, completion: nil)
     }
     
     private let navigationController: UINavigationController
     var id: ActionId = .descriptionDialog
     
-    var fieldIds: [FieldId] = [.descr]
+    var fieldIds: [FieldId] = [.description]
     
     var flowEngine: FlowEngine!
     

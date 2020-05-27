@@ -8,7 +8,7 @@
 import Foundation
 
 enum OperationType: String, Decodable {
-    case payment
+    case charge
     case presentialRefund = "presential_refund"
 }
 
@@ -16,4 +16,10 @@ struct StepsResponse : Decodable {
     let steps: [Step]
     let validations: [FieldValidation]
     let operationType: OperationType
+    
+    private enum CodingKeys: String, CodingKey {
+        case steps
+        case validations
+        case operationType = "operation_type"
+    }
 }

@@ -15,20 +15,20 @@ struct Rule : Decodable {
         case not
         case and
         case or
-        case greaterThan
-        case lessThan
-        case greaterThanOrEqual
-        case lessThanOrEqual
+        case greaterThan = "greater_than"
+        case lessThan = "less_than"
+        case greaterThanOrEqual = "greater_than_or_equal"
+        case lessThanOrEqual = "less_than_or_equal"
         case null
         case notNull
     }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case type
-        case fieldId = "field"
+        case fieldId = "field_id"
         case valueType = "value_type"
-        case value
-        case subRules = "rules"
+        case jsonValue = "value"
+        case subRules = "sub_rules"
     }
     
     enum ValueType: String, Decodable {
@@ -41,8 +41,11 @@ struct Rule : Decodable {
     let type: RuleType
     let fieldId: FieldId?
     let valueType: ValueType?
-    let value: Any?
     let subRules: [Rule]?
+    private let jsonValue: JSONValue?
+    var value: Any? {
+        return jsonValue?.value
+    }
     
     private var evaluator: RuleEvaluator {
         if let valueType = valueType {
@@ -61,14 +64,13 @@ struct Rule : Decodable {
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.fieldId = try values.decode(FieldId.self, forKey: .fieldId)
+        self.fieldId = try values.decodeIfPresent(FieldId.self, forKey: .fieldId)
         self.type = try values.decode(RuleType.self, forKey: .type)
-        self.valueType = try values.decode(ValueType.self, forKey: .valueType)
-        let jsonValue = try values.decode(JSONValue.self, forKey: .value)
-        self.value = jsonValue.value
-        self.subRules = try values.decode([Rule].self, forKey: .subRules)
+        self.valueType = try values.decodeIfPresent(ValueType.self, forKey: .valueType)
+        self.jsonValue = try values.decodeIfPresent(JSONValue.self, forKey: .jsonValue)
+        self.subRules = try values.decodeIfPresent([Rule].self, forKey: .subRules)
     }
     
     func evaluate(state: FlowState) -> Bool {

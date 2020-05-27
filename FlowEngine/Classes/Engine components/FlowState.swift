@@ -13,10 +13,10 @@ public enum CardType: String {
     case debit = "debit_card"
 }
 
-class FlowState: NSObject {
+class FlowState {
     private(set) var amount: Double?
-    private(set) var descr: String?
-    private(set) var installments: [Int]?
+    private(set) var description: String?
+    private(set) var installments: Int?
     private(set) var cardType: CardType?
     private(set) var cart: [Cart]?
     private(set) var showedPaymentResult = false
@@ -27,12 +27,28 @@ class FlowState: NSObject {
     
     func setField(id: FieldId, value: Any?) {
         let propName = id.mirror.label
-        let mirror = Mirror(reflecting: self)
-        let childProp = mirror.children.first(where: {$0.label == propName})
-        guard type(of: childProp?.value) == type(of: value) else {
-            return
+        switch propName {
+        case "amount":
+            self.amount = value as? Double
+        case "description":
+            self.description = value as? String
+        case "installments":
+            self.installments = value as? Int
+        case "cardType":
+            self.cardType = value as? CardType
+        case "cart":
+            self.cart = value as? [Cart]
+        case "showedPaymentResult":
+            self.showedPaymentResult = value as? Bool ?? false
+        default:
+            break
         }
-        self.setValue(value, forKey: propName)
+//        let mirror = Mirror(reflecting: self)
+//        let childProp = mirror.children.first(where: {$0.label == propName})
+//        guard type(of: childProp?.value) == type(of: value) else {
+//            return
+//        }
+//        self[keyPath: \FlowState.amount] = value
     }
     
     func getFieldValue(id: FieldId) -> Any? {

@@ -29,12 +29,20 @@ class SimpleCalculatorViewController: UIViewController {
         super.viewDidLoad()
         self.amountTextField.delegate = self
         self.amountTextField.keyboardType = .decimalPad
+        self.errorLabel.isHidden = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGestureRecognizer.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.amountTextField.resignFirstResponder()
     }
     
     @IBAction func didTapContinue() {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        let amount = numberFormatter.number(from: self.amountTextField.text ?? "")
+        let amount = numberFormatter.number(from: self.amountTextField.text ?? "")?.doubleValue ?? 0
         let result = self.flowEngine.updateFlowState(fieldId: .amount, value: amount)
         if case .failure(let validationError) = result, case .failed(let failingValidations) = validationError, let validation = failingValidations.first {
             if validation.id == "amount_out_of_bounds" {

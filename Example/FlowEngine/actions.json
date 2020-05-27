@@ -1,32 +1,32 @@
 [
     {
-        "name": "simple_calculator",
+        "id": "simple_calculator",
         "fields": [
             "amount",
         ]
     },
     {
-        "name": "description_dialog",
+        "id": "description_dialog",
         "fields": [
             "description"
         ]
     },
     {
-        "name": "card_type_random",
+        "id": "card_type_random",
+        "fields": [
+            "card_type"
+        ]
+    },
+    {
+        "id": "installments_screen",
         "fields": [
             "installments"
         ]
     },
     {
-        "name": "installments_screen",
+        "id": "simple_congrats",
         "fields": [
-            "installments"
-        ]
-    },
-    {
-        "name": "simple_congrats",
-        "fields": [
-            "is_finished"
+            "showed_payment_result"
         ]
     }
 ]

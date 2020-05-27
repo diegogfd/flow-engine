@@ -17,4 +17,10 @@ public struct FieldValidation : Decodable {
     let fieldId: FieldId
     let rule: Rule
     
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case fieldId = "field_id"
+        case rule = "rules"
+    }
+    
 }

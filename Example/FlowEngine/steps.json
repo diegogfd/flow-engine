@@ -1,29 +1,31 @@
 {
     "operation_type":"charge",
     "validations":[
-        "id": "amount_out_of_bounds"
-        "field_id": "amount"
-        "rules": {
-            "type":"and",
-            "field_id": null,
-            "value_type": null,
-            "value": null,
-            "sub_rules": [
-                {
-                    "type":"greater_than",
-                    "field_id": "amount",
-                    "value_type": "double",
-                    "value": 0,
-                    "sub_rules": null
-                },
-                {
-                    "type":"less_than_or_equal",
-                    "field_id": "amount",
-                    "value_type": "double",
-                    "value": 50000,
-                    "sub_rules": null
-                }
-            ]
+        {
+            "id":"amount_out_of_bounds",
+            "field_id":"amount",
+            "rules": {
+                "type":"and",
+                "field_id":null,
+                "value_type":null,
+                "value":null,
+                "sub_rules":[
+                    {
+                        "type":"greater_than",
+                        "field_id": "amount",
+                        "value_type": "double",
+                        "value": 0,
+                        "sub_rules": null
+                    },
+                    {
+                        "type":"less_than_or_equal",
+                        "field_id": "amount",
+                        "value_type": "double",
+                        "value": 50000,
+                        "sub_rules": null
+                    }
+                ]
+            }
         }
     ],
     "steps":[
@@ -45,7 +47,7 @@
             ],
             "optional_fields":null,
             "rules":null
-        }
+        },
         {
             "id":"set_installments",
             "required_fields":[
@@ -57,7 +59,7 @@
                 "field_id": null,
                 "value_type": null,
                 "value": null,
-                "sub_rules": [
+                "sub_rules":[
                     {
                         "type":"equals",
                         "field_id": "card_type",

@@ -15,18 +15,19 @@ class Step: FlowEngineComponent, Decodable {
     let optionalFields: [FieldId]
     let rule: Rule?
     
-    var actions: [Action] = [] {
-        didSet {
-            self.currentAction = self.actions.first
-        }
-    }
+    var actions: [Action] = []
+    
     var currentAction: Action? {
         didSet {
-            currentAction?.execute(for: self.allFields)
+            guard let currentAction = currentAction else { return }
+            let actionFieldsSet = Set(currentAction.fieldIds)
+            let allFieldsSet = Set(self.allFields)
+            let fieldsInCommon = Array(actionFieldsSet.intersection(allFieldsSet))
+            currentAction.execute(for: fieldsInCommon)
         }
     }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case id
         case requiredFields = "required_fields"
         case optionalFields = "optional_fields"
@@ -37,27 +38,21 @@ class Step: FlowEngineComponent, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         let rawRequiredFields = try container.decode([String].self, forKey: .requiredFields)
-        self.requiredFields = try rawRequiredFields.map { (rawField) -> FieldId in
-            guard let field = FieldId(rawValue: rawField) else {
-                throw DecodingError.typeMismatch(FieldId.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
-            }
-            return field
+        self.requiredFields = rawRequiredFields.map { (rawField) -> FieldId in
+            return FieldId(rawValue: rawField) ?? .unknown
         }
-        let rawOptionalFields = try container.decode([String].self, forKey: .requiredFields)
-        self.optionalFields = try rawOptionalFields.map { (rawField) -> FieldId in
-            guard let field = FieldId(rawValue: rawField) else {
-                throw DecodingError.typeMismatch(FieldId.self, DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a valid id"))
-            }
-            return field
+        let rawOptionalFields = try container.decodeIfPresent([String].self, forKey: .optionalFields) ?? []
+        self.optionalFields = rawOptionalFields.map { (rawField) -> FieldId in
+            return FieldId(rawValue: rawField) ?? .unknown
         }
-        self.rule = try container.decode(Rule.self, forKey: .rule)
+        self.rule = try container.decodeIfPresent(Rule.self, forKey: .rule)
     }
     
     var fulfilledFields: [FieldId] = []
     
     var isFulfilled: Bool {
-        let fulfilledFieldsSet = Set(arrayLiteral: self.fulfilledFields)
-        let requiredFieldsSet = Set(arrayLiteral: self.requiredFields)
+        let fulfilledFieldsSet = Set(self.fulfilledFields)
+        let requiredFieldsSet = Set(self.requiredFields)
         return requiredFieldsSet.isSubset(of: fulfilledFieldsSet)
     }
     
@@ -71,7 +66,7 @@ class Step: FlowEngineComponent, Decodable {
         }
         for field in requiredFields {
             let fieldValue = flowEngine.state.getFieldValue(id: field)
-            if fieldValue == nil {
+            if case nil = fieldValue {
                 return true
             }
         }
@@ -79,8 +74,8 @@ class Step: FlowEngineComponent, Decodable {
     }
     
     func executeNextAction() {
-        self.actions.removeFirst()
         self.currentAction = self.actions.first
+        self.actions.removeFirst()
     }
     
 }

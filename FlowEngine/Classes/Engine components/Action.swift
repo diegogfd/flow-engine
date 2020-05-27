@@ -13,12 +13,12 @@ public protocol ActionAssociated {
 }
 
 public enum ActionId: String {
-    case simpleCalculator
-    case descriptionDialog
-    case cardTypeRandom
-    case installmentsSelection
-    case simpleCongrats
-    
+    case simpleCalculator = "simple_calculator"
+    case descriptionDialog = "description_dialog"
+    case cardTypeRandom = "card_type_random"
+    case installmentsSelection = "installments_selection"
+    case simpleCongrats = "simple_congrats"
+    case unknown
 }
 
 public protocol Action : class, FlowEngineComponent {
