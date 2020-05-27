@@ -18,7 +18,7 @@
         ]
     },
     {
-        "id": "installments_screen",
+        "id": "installments_selection",
         "fields": [
             "installments"
         ]

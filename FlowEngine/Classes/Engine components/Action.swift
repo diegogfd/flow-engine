@@ -14,6 +14,7 @@ public protocol ActionAssociated {
 
 public enum ActionId: String {
     case simpleCalculator = "simple_calculator"
+    case descriptionCalculator = "description_calculator"
     case descriptionDialog = "description_dialog"
     case cardTypeRandom = "card_type_random"
     case installmentsSelection = "installments_selection"

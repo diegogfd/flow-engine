@@ -52,6 +52,7 @@ public class FlowEngine {
         do {
             let stepsData = try Data(contentsOf: stepsFile)
             let stepsResponse = try JSONDecoder().decode(StepsResponse.self, from: stepsData)
+            self.state = FlowState()
             self.steps = stepsResponse.steps
             self.steps.forEach({$0.flowEngine = self})
             self.validations = stepsResponse.validations
@@ -115,10 +116,6 @@ public class FlowEngine {
                 }
             }
         }
-    }
-    
-    public func resetState() {
-        self.state = FlowState()
     }
     
     private func goToNextStep() {

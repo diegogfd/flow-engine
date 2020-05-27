@@ -13,7 +13,7 @@ class ExampleViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
-    private let rows = ["Example 1"]
+    private let numberOfExamples = 2
     private var flowEngine = FlowEngine()
 
     override func viewDidLoad() {
@@ -24,7 +24,9 @@ class ExampleViewController: UIViewController {
                 SimpleCalculatorAction(navigationController: navigationController),
                 DescriptionDialogAction(navigationController: navigationController),
                 CardTypeRandomAction(),
-                SimpleCongratsAction(navigationController: navigationController)
+                SimpleCongratsAction(navigationController: navigationController),
+                DescriptionCalculatorAction(navigationController: navigationController),
+                InstallmentsSelectionAction(navigationController: navigationController)
             ])
         }
         tableView.dataSource = self
@@ -36,19 +38,19 @@ class ExampleViewController: UIViewController {
 
 extension ExampleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.rows.count
+        return numberOfExamples
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = rows[indexPath.row]
+        cell.textLabel?.text = "Example \(indexPath.row + 1)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        flowEngine.fetch(actionsFileName: "actions")
+        flowEngine.fetch(actionsFileName: "actions_\(indexPath.row + 1)")
     }
     
 }

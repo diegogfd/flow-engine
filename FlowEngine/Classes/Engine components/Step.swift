@@ -61,20 +61,22 @@ class Step: FlowEngineComponent, Decodable {
     }
     
     var canEnterToStep: Bool {
-        if let rule = rule {
-            return rule.evaluate(state: self.flowEngine.state)
-        }
+        var canEnter = false
         for field in requiredFields {
             let fieldValue = flowEngine.state.getFieldValue(id: field)
             //TODO: resolver por qué nil != nil
             if fieldValue.debugDescription == "Optional(nil)"{
-                return true
+                canEnter = true
             }
-//            if fieldValue == nil {
-//                return true
-//            }
+        //  if fieldValue == nil {
+        //      return true
+        //  }
         }
-        return false
+        if let rule = rule {
+            return rule.evaluate(state: self.flowEngine.state) && canEnter
+        }
+        
+        return canEnter
     }
     
     func executeNextAction() {

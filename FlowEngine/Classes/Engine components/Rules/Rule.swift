@@ -74,11 +74,7 @@ struct Rule : Decodable {
     }
     
     func evaluate(state: FlowState) -> Bool {
-        guard let fieldId = self.fieldId else {
-            return false
-        }
-        let value = state.getFieldValue(id: fieldId)
-        return self.evaluate(value: value)
+        return evaluator.evaluate(rule: self, state: state)
     }
     
     func evaluate(value: Any?) -> Bool {

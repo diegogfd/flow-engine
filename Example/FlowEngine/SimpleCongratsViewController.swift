@@ -28,7 +28,6 @@ class SimpleCongratsViewController: UIViewController {
     }
     
     @IBAction func didTapGoBack() {
-        self.flowEngine.resetState()
         self.navigationController?.popToRootViewController(animated: true)
     }
 

@@ -9,6 +9,7 @@ import Foundation
 
 protocol RuleEvaluator {
     func evaluate(rule: Rule, value: Any?) -> Bool
+    func evaluate(rule: Rule, state: FlowState) -> Bool
 }
 
 protocol SimpleRuleEvaluator: RuleEvaluator {
@@ -53,6 +54,14 @@ extension SimpleRuleEvaluator {
         default:
             return false
         }
+    }
+    
+    func evaluate(rule: Rule, state: FlowState) -> Bool {
+        guard let fieldId = rule.fieldId else {
+            return false
+        }
+        let value = state.getFieldValue(id: fieldId)
+        return self.evaluate(rule: rule, value: value)
     }
     
     func greaterThan(left: T, right: T) -> Bool {

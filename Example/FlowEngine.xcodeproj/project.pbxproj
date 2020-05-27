@@ -25,7 +25,12 @@
 		E106774B247C5AA500AE48F9 /* SimpleCongratsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1067749247C5AA500AE48F9 /* SimpleCongratsViewController.swift */; };
 		E106774C247C5AA500AE48F9 /* SimpleCongratsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E106774A247C5AA500AE48F9 /* SimpleCongratsViewController.xib */; };
 		E106774E247C5C2D00AE48F9 /* SimpleCongratsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E106774D247C5C2D00AE48F9 /* SimpleCongratsAction.swift */; };
-		E106774F247D6F9A00AE48F9 /* actions.json in Resources */ = {isa = PBXBuildFile; fileRef = E1067736247BE6F800AE48F9 /* actions.json */; };
+		E106774F247D6F9A00AE48F9 /* actions_1.json in Resources */ = {isa = PBXBuildFile; fileRef = E1067736247BE6F800AE48F9 /* actions_1.json */; };
+		E1067751247E983300AE48F9 /* actions_2.json in Resources */ = {isa = PBXBuildFile; fileRef = E1067750247E983300AE48F9 /* actions_2.json */; };
+		E1067754247E9A2700AE48F9 /* DescriptionCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1067752247E9A2700AE48F9 /* DescriptionCalculatorViewController.swift */; };
+		E1067755247E9A2700AE48F9 /* DescriptionCalculatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1067753247E9A2700AE48F9 /* DescriptionCalculatorViewController.xib */; };
+		E1067757247EA65200AE48F9 /* DescriptionCalculatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1067756247EA65200AE48F9 /* DescriptionCalculatorAction.swift */; };
+		E1067759247EB1F200AE48F9 /* InstallmentsSelectionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1067758247EB1F200AE48F9 /* InstallmentsSelectionAction.swift */; };
 		E1CE4CBC244642D300F9A027 /* NavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CE4CBB244642D300F9A027 /* NavigationAction.swift */; };
 		F90FDA12B207025D0C62F3E7 /* Pods_FlowEngine_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58F43B841897F986E19E5DCA /* Pods_FlowEngine_Example.framework */; };
 /* End PBXBuildFile section */
@@ -58,7 +63,7 @@
 		83643294DBBF51D1A9C7293A /* Pods-FlowEngine_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowEngine_Example.release.xcconfig"; path = "Target Support Files/Pods-FlowEngine_Example/Pods-FlowEngine_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9C6F225875765D929F420EDA /* Pods-FlowEngine_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowEngine_Example.debug.xcconfig"; path = "Target Support Files/Pods-FlowEngine_Example/Pods-FlowEngine_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		ACE3F39757F300D991DBD68C /* FlowEngine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FlowEngine.podspec; path = ../FlowEngine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		E1067736247BE6F800AE48F9 /* actions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actions.json; sourceTree = "<group>"; };
+		E1067736247BE6F800AE48F9 /* actions_1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actions_1.json; sourceTree = "<group>"; };
 		E1067737247BE78700AE48F9 /* steps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = steps.json; sourceTree = "<group>"; };
 		E1067739247BEF2700AE48F9 /* SimpleCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCalculatorViewController.swift; sourceTree = "<group>"; };
 		E106773A247BEF2700AE48F9 /* SimpleCalculatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleCalculatorViewController.xib; sourceTree = "<group>"; };
@@ -70,6 +75,11 @@
 		E1067749247C5AA500AE48F9 /* SimpleCongratsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCongratsViewController.swift; sourceTree = "<group>"; };
 		E106774A247C5AA500AE48F9 /* SimpleCongratsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleCongratsViewController.xib; sourceTree = "<group>"; };
 		E106774D247C5C2D00AE48F9 /* SimpleCongratsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCongratsAction.swift; sourceTree = "<group>"; };
+		E1067750247E983300AE48F9 /* actions_2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actions_2.json; sourceTree = "<group>"; };
+		E1067752247E9A2700AE48F9 /* DescriptionCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCalculatorViewController.swift; sourceTree = "<group>"; };
+		E1067753247E9A2700AE48F9 /* DescriptionCalculatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionCalculatorViewController.xib; sourceTree = "<group>"; };
+		E1067756247EA65200AE48F9 /* DescriptionCalculatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCalculatorAction.swift; sourceTree = "<group>"; };
+		E1067758247EB1F200AE48F9 /* InstallmentsSelectionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallmentsSelectionAction.swift; sourceTree = "<group>"; };
 		E1CE4CBB244642D300F9A027 /* NavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAction.swift; sourceTree = "<group>"; };
 		E50F535386922BF5376A5420 /* Pods-FlowEngine_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowEngine_Tests.release.xcconfig"; path = "Target Support Files/Pods-FlowEngine_Tests/Pods-FlowEngine_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		FE5B34241843C92CFDEED18E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -128,7 +138,6 @@
 		607FACD21AFB9204008FA782 /* Example for FlowEngine */ = {
 			isa = PBXGroup;
 			children = (
-				E1067736247BE6F800AE48F9 /* actions.json */,
 				E10D7B382445F8F1001D13D2 /* Views */,
 				E10D7B3424450112001D13D2 /* Actions */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -138,6 +147,8 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				E1067737247BE78700AE48F9 /* steps.json */,
+				E1067736247BE6F800AE48F9 /* actions_1.json */,
+				E1067750247E983300AE48F9 /* actions_2.json */,
 			);
 			name = "Example for FlowEngine";
 			path = FlowEngine;
@@ -197,6 +208,8 @@
 				E106773F247BF31C00AE48F9 /* DescriptionDialogAction.swift */,
 				E1067741247C54FF00AE48F9 /* CardTypeRandomAction.swift */,
 				E106774D247C5C2D00AE48F9 /* SimpleCongratsAction.swift */,
+				E1067756247EA65200AE48F9 /* DescriptionCalculatorAction.swift */,
+				E1067758247EB1F200AE48F9 /* InstallmentsSelectionAction.swift */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -210,6 +223,8 @@
 				E1067746247C56BA00AE48F9 /* InstallmentsSelectionViewController.xib */,
 				E1067749247C5AA500AE48F9 /* SimpleCongratsViewController.swift */,
 				E106774A247C5AA500AE48F9 /* SimpleCongratsViewController.xib */,
+				E1067752247E9A2700AE48F9 /* DescriptionCalculatorViewController.swift */,
+				E1067753247E9A2700AE48F9 /* DescriptionCalculatorViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -303,12 +318,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1067751247E983300AE48F9 /* actions_2.json in Resources */,
 				E106773C247BEF2700AE48F9 /* SimpleCalculatorViewController.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				E1067755247E9A2700AE48F9 /* DescriptionCalculatorViewController.xib in Resources */,
 				E1067738247BE78700AE48F9 /* steps.json in Resources */,
-				E106774F247D6F9A00AE48F9 /* actions.json in Resources */,
+				E106774F247D6F9A00AE48F9 /* actions_1.json in Resources */,
 				E106774C247C5AA500AE48F9 /* SimpleCongratsViewController.xib in Resources */,
 				E1067748247C56BA00AE48F9 /* InstallmentsSelectionViewController.xib in Resources */,
 			);
@@ -393,12 +410,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1067757247EA65200AE48F9 /* DescriptionCalculatorAction.swift in Sources */,
+				E1067754247E9A2700AE48F9 /* DescriptionCalculatorViewController.swift in Sources */,
 				E1067740247BF31C00AE48F9 /* DescriptionDialogAction.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ExampleViewController.swift in Sources */,
 				E1067742247C54FF00AE48F9 /* CardTypeRandomAction.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				E106774E247C5C2D00AE48F9 /* SimpleCongratsAction.swift in Sources */,
 				E106773B247BEF2700AE48F9 /* SimpleCalculatorViewController.swift in Sources */,
+				E1067759247EB1F200AE48F9 /* InstallmentsSelectionAction.swift in Sources */,
 				E106773E247BEFE400AE48F9 /* SimpleCalculatorAction.swift in Sources */,
 				E1CE4CBC244642D300F9A027 /* NavigationAction.swift in Sources */,
 				E1067747247C56BA00AE48F9 /* InstallmentsSelectionViewController.swift in Sources */,

@@ -8,16 +8,16 @@
 
 import Foundation
 
-public enum CardType: String {
-    case credit = "credit_card"
-    case debit = "debit_card"
-}
+//public enum CardType: String {
+//    case credit = "credit_card"
+//    case debit = "debit_card"
+//}
 
 class FlowState {
     private(set) var amount: Double?
     private(set) var description: String?
     private(set) var installments: Int?
-    private(set) var cardType: CardType?
+    private(set) var cardType: String?
     private(set) var cart: [Cart]?
     private(set) var showedPaymentResult: Bool?
     
@@ -36,7 +36,7 @@ class FlowState {
         case "installments":
             self.installments = value as? Int
         case "cardType":
-            self.cardType = value as? CardType
+            self.cardType = value as? String
         case "cart":
             self.cart = value as? [Cart]
         case "showedPaymentResult":

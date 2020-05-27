@@ -1,0 +1,26 @@
+[
+    {
+        "id": "description_calculator",
+        "fields": [
+            "amount", "description"
+        ]
+    },
+    {
+        "id": "card_type_random",
+        "fields": [
+            "card_type"
+        ]
+    },
+    {
+        "id": "installments_selection",
+        "fields": [
+            "installments"
+        ]
+    },
+    {
+        "id": "simple_congrats",
+        "fields": [
+            "showed_payment_result"
+        ]
+    }
+]

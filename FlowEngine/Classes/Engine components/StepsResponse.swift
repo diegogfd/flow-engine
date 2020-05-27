@@ -23,3 +23,4 @@ struct StepsResponse : Decodable {
         case operationType = "operation_type"
     }
 }
+
