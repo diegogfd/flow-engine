@@ -66,16 +66,21 @@ class Step: FlowEngineComponent, Decodable {
         }
         for field in requiredFields {
             let fieldValue = flowEngine.state.getFieldValue(id: field)
-            if case nil = fieldValue {
+            //TODO: resolver por qué nil != nil
+            if fieldValue.debugDescription == "Optional(nil)"{
                 return true
             }
+//            if fieldValue == nil {
+//                return true
+//            }
         }
         return false
     }
     
     func executeNextAction() {
-        self.currentAction = self.actions.first
+        let currentAction = self.actions.first
         self.actions.removeFirst()
+        self.currentAction = currentAction
     }
     
 }

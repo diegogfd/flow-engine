@@ -18,7 +18,7 @@ public class FlowEngine {
     private var actions: [Action] = []
     private var activeActions: [ActionRepresentation] = []
     private var validations: [FieldValidation] = []
-    let state: FlowState = FlowState()
+    var state: FlowState = FlowState()
     
     public init() {
         
@@ -115,6 +115,10 @@ public class FlowEngine {
                 }
             }
         }
+    }
+    
+    public func resetState() {
+        self.state = FlowState()
     }
     
     private func goToNextStep() {

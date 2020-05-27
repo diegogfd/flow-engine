@@ -19,6 +19,7 @@ class CardTypeRandomAction : Action {
         let isCredit = Bool.random()
         print("SALIO \(isCredit ? "CREDITO" : "DEBITO")")
         self.flowEngine.updateFlowState(fieldId: .cardType, value: isCredit ? CardType.credit : CardType.debit)
+        self.flowEngine.goNext()
     }
     
 }

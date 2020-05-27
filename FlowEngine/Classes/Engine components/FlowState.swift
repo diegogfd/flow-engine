@@ -19,13 +19,14 @@ class FlowState {
     private(set) var installments: Int?
     private(set) var cardType: CardType?
     private(set) var cart: [Cart]?
-    private(set) var showedPaymentResult = false
+    private(set) var showedPaymentResult: Bool?
     
     func setAttributes(_ attributes: [Attribute]) {
         attributes.forEach({self.setField(id: $0.fieldId, value: $0.value)})
     }
     
     func setField(id: FieldId, value: Any?) {
+        //TODO: ver de mejorar esto
         let propName = id.mirror.label
         switch propName {
         case "amount":
@@ -39,7 +40,7 @@ class FlowState {
         case "cart":
             self.cart = value as? [Cart]
         case "showedPaymentResult":
-            self.showedPaymentResult = value as? Bool ?? false
+            self.showedPaymentResult = value as? Bool
         default:
             break
         }
