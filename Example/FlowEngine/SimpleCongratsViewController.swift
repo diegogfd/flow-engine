@@ -8,14 +8,16 @@
 
 import UIKit
 import FlowEngine
+import MLCommons
 
-class SimpleCongratsViewController: UIViewController {
+class SimpleCongratsViewController: MLBaseViewController, FlowEngineComponent {
     
-    private let flowEngine: FlowEngine
+    var flowEngine: FlowEngine!
     
     init(flowEngine: FlowEngine) {
         self.flowEngine = flowEngine
         super.init(nibName: "SimpleCongratsViewController", bundle: nil)
+        self.addBehaviour(FlowEngineBehaviour())
     }
     
     required init?(coder: NSCoder) {

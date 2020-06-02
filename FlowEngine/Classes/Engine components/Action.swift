@@ -22,7 +22,7 @@ public enum ActionId: String {
     case unknown
 }
 
-public protocol Action : class, FlowEngineComponent {
+public protocol Action: FlowEngineComponent {
     func execute(for fields: [FieldId])
     var id: ActionId { get }
     var fieldIds: [FieldId] { get }

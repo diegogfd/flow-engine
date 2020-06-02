@@ -30,6 +30,7 @@ class DescriptionDialogAction : NavigationAction {
             }
         }
         alertController.addAction(alertAction)
+        alertController.modalPresentationStyle = .fullScreen
         self.navigationController.present(alertController, animated: true, completion: nil)
     }
     

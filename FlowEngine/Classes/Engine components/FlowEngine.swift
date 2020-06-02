@@ -18,20 +18,12 @@ public class FlowEngine {
     private var actions: [Action] = []
     private var activeActions: [ActionRepresentation] = []
     private var validations: [FieldValidation] = []
+    private var currentStep: Step!
+    private var actionsForCurrentStep: [Action] = []
+    private var currentAction: Action?
+    
     var state: FlowState = FlowState()
-    
-    public init() {
         
-    }
-
-    var currentStep: Step! {
-        didSet {
-            let actionIds = self.getActionIds()
-            self.currentStep?.actions = self.actions.filter({actionIds.contains($0.id)})
-            self.currentStep.executeNextAction()
-        }
-    }
-    
     public func registerActions(_ actions: [Action]) {
         self.actions.append(contentsOf: actions)
         actions.forEach({
@@ -44,22 +36,22 @@ public class FlowEngine {
         self.registerActions([action])
     }
     
+    public init() {
+        
+    }
+    
     public func fetch(actionsFileName: String) {
         guard let stepsFile = Bundle.main.url(forResource: "steps", withExtension: "json"), let actionsFile = Bundle.main.url(forResource: actionsFileName, withExtension: "json") else {
             return
         }
-
         do {
             let stepsData = try Data(contentsOf: stepsFile)
             let stepsResponse = try JSONDecoder().decode(StepsResponse.self, from: stepsData)
-            self.state = FlowState()
-            self.steps = stepsResponse.steps
-            self.steps.forEach({$0.flowEngine = self})
-            self.validations = stepsResponse.validations
-            
             let actionsData = try Data(contentsOf: actionsFile)
             self.activeActions = try JSONDecoder().decode([ActionRepresentation].self, from: actionsData)
-            self.currentStep = self.steps.first
+            self.state = FlowState()
+            self.steps = stepsResponse.steps
+            self.validations = stepsResponse.validations
         } catch {
             print("Bad JSON format")
         }
@@ -70,7 +62,6 @@ public class FlowEngine {
         let result = self.validateAttributes(attributes: attributes)
         if case .success(()) = result {
             self.state.setAttributes(attributes)
-            self.currentStep.fulfilledFields.append(contentsOf: attributes.map({$0.fieldId}))
         }
         return result
     }
@@ -98,36 +89,53 @@ public class FlowEngine {
     }
     
     public func goNext() {
-        if self.currentStep.isFulfilled, self.currentStep.actions.isEmpty {
-            self.goToNextStep()
-        } else {
-            guard let currentAction = self.currentStep.currentAction else {
-                return
-            }
-            //antes de salir de la acción, vuelvo a verificar que haya seteado todos los campos requeridos
-            let currentActionRequiredFields = self.currentStep.requiredFields.filter({ currentAction.fieldIds.contains($0)})
+        if let currentAction = self.currentAction {
+            //verifico que la accion actual ya cubrió todos los campos requeridos
+            let currentActionRequiredFields = currentAction.fieldIds.filter({self.currentStep.requiredFields.contains($0)})
             if currentActionRequiredFields.isEmpty {
-                self.currentStep.executeNextAction()
+                //la acción solo cubre campos opcionales, puedo salir de la acción
+                self.goToNextStepOrAction()
             } else {
                 let actionFieldsSet = Set(currentActionRequiredFields)
-                let fulfilledFieldsSet = Set(self.currentStep.fulfilledFields)
+                let fulfilledFieldsSet = Set(self.state.fulfilledFields)
                 if actionFieldsSet.isSubset(of: fulfilledFieldsSet) {
-                    self.currentStep.executeNextAction()
+                    //los campos requeridos de la acción ya fueron cubiertos, puedo salir de la acción
+                    self.goToNextStepOrAction()
                 }
             }
+        } else {
+            self.goToNextStepOrAction()
+        }
+    }
+    
+    private func goToNextStepOrAction() {
+        if actionsForCurrentStep.isEmpty {
+            self.goToNextStep()
+        } else {
+            self.goToNextAction()
         }
     }
     
     private func goToNextStep() {
-        if let nextStep = self.steps.first(where: {$0.canEnterToStep}) {
-            self.currentStep = nextStep
-        }
+        self.currentStep = steps.first(where: {$0.canEnterToStep(state: state)})
+        let actionIds = self.getActionIds(for: self.currentStep)
+        self.actionsForCurrentStep = self.actions.filter({actionIds.contains($0.id)})
+        self.goToNextAction()
     }
     
-    private func getActionIds() -> [ActionId] {
+    private func goToNextAction() {
+        guard !self.actionsForCurrentStep.isEmpty else { return }
+        self.currentAction = self.actionsForCurrentStep.removeFirst()
+        let actionFieldsSet = Set(self.currentAction!.fieldIds)
+        let allFieldsSet = Set(self.currentStep.allFields)
+        let fieldsInCommon = Array(actionFieldsSet.intersection(allFieldsSet))
+        self.currentAction?.execute(for: fieldsInCommon)
+    }
+    
+    private func getActionIds(for step: Step) -> [ActionId] {
         self.activeActions.filter { (action) -> Bool in
             for fieldId in action.fields {
-                if self.currentStep.allFields.contains(fieldId) {
+                if step.allFields.contains(fieldId) {
                     return true
                 }
             }

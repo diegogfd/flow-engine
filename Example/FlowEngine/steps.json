@@ -71,7 +71,7 @@
                         "type":"greater_than_or_equal",
                         "field_id": "amount",
                         "value_type": "double",
-                        "value": 10,
+                        "value": 100,
                         "sub_rules": null
                     }
                 ]

@@ -8,18 +8,20 @@
 
 import UIKit
 import FlowEngine
+import MLCommons
 
-class InstallmentsSelectionViewController: UIViewController {
+class InstallmentsSelectionViewController: MLBaseViewController, FlowEngineComponent {
     
     private let installments = [1,3,6,9,12,18]
     
     @IBOutlet private var tableView: UITableView!
     
-    private let flowEngine: FlowEngine
+    var flowEngine: FlowEngine!
     
     init(flowEngine: FlowEngine) {
         self.flowEngine = flowEngine
         super.init(nibName: "InstallmentsSelectionViewController", bundle: nil)
+        self.addBehaviour(FlowEngineBehaviour())
     }
     
     required init?(coder: NSCoder) {

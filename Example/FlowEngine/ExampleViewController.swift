@@ -15,6 +15,7 @@ class ExampleViewController: UIViewController {
     
     private let numberOfExamples = 2
     private var flowEngine = FlowEngine()
+    private let navigationControllerDelegate = NavigationControllerDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class ExampleViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.navigationController?.delegate = navigationControllerDelegate
     }
 
 }
@@ -51,6 +53,7 @@ extension ExampleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         flowEngine.fetch(actionsFileName: "actions_\(indexPath.row + 1)")
+        flowEngine.goNext()
     }
     
 }

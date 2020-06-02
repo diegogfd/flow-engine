@@ -44,6 +44,7 @@ class FlowState {
         default:
             break
         }
+        
 //        let mirror = Mirror(reflecting: self)
 //        let childProp = mirror.children.first(where: {$0.label == propName})
 //        guard type(of: childProp?.value) == type(of: value) else {
@@ -59,6 +60,9 @@ class FlowState {
         return childProp?.value
     }
     
+    var fulfilledFields: [FieldId] {
+        FieldId.allCases.filter({self.getFieldValue(id: $0) != nil })
+    }
 }
 
 struct Cart {

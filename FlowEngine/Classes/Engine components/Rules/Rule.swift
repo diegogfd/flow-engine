@@ -81,13 +81,4 @@ struct Rule : Decodable {
         return evaluator.evaluate(rule: self, value: value)
     }
     
-    func getFailingRules(value: Any?) -> [Rule]? {
-        if let subRules = subRules {
-            return subRules.filter({!$0.evaluate(value: value)})
-        } else if !self.evaluate(value: value) {
-            return [self]
-        }
-        return nil
-    }
-    
 }

@@ -8,25 +8,12 @@
 
 import Foundation
 
-class Step: FlowEngineComponent, Decodable {
-    var flowEngine: FlowEngine!
+struct Step : Decodable {
     let id: String
     let requiredFields: [FieldId]
     let optionalFields: [FieldId]
     let rule: Rule?
-    
-    var actions: [Action] = []
-    
-    var currentAction: Action? {
-        didSet {
-            guard let currentAction = currentAction else { return }
-            let actionFieldsSet = Set(currentAction.fieldIds)
-            let allFieldsSet = Set(self.allFields)
-            let fieldsInCommon = Array(actionFieldsSet.intersection(allFieldsSet))
-            currentAction.execute(for: fieldsInCommon)
-        }
-    }
-    
+        
     private enum CodingKeys: String, CodingKey {
         case id
         case requiredFields = "required_fields"
@@ -34,7 +21,7 @@ class Step: FlowEngineComponent, Decodable {
         case rule = "rules"
     }
     
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         let rawRequiredFields = try container.decode([String].self, forKey: .requiredFields)
@@ -47,11 +34,9 @@ class Step: FlowEngineComponent, Decodable {
         }
         self.rule = try container.decodeIfPresent(Rule.self, forKey: .rule)
     }
-    
-    var fulfilledFields: [FieldId] = []
-    
-    var isFulfilled: Bool {
-        let fulfilledFieldsSet = Set(self.fulfilledFields)
+
+    func isFulfilled(state: FlowState) -> Bool {
+        let fulfilledFieldsSet = Set(state.fulfilledFields)
         let requiredFieldsSet = Set(self.requiredFields)
         return requiredFieldsSet.isSubset(of: fulfilledFieldsSet)
     }
@@ -60,10 +45,10 @@ class Step: FlowEngineComponent, Decodable {
         return self.requiredFields + self.optionalFields
     }
     
-    var canEnterToStep: Bool {
+    func canEnterToStep(state: FlowState) -> Bool {
         var canEnter = false
         for field in requiredFields {
-            let fieldValue = flowEngine.state.getFieldValue(id: field)
+            let fieldValue = state.getFieldValue(id: field)
             //TODO: resolver por qué nil != nil
             if fieldValue.debugDescription == "Optional(nil)"{
                 canEnter = true
@@ -73,16 +58,9 @@ class Step: FlowEngineComponent, Decodable {
         //  }
         }
         if let rule = rule {
-            return rule.evaluate(state: self.flowEngine.state) && canEnter
+            return rule.evaluate(state: state) && canEnter
         }
         
         return canEnter
     }
-    
-    func executeNextAction() {
-        let currentAction = self.actions.first
-        self.actions.removeFirst()
-        self.currentAction = currentAction
-    }
-    
 }

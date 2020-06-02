@@ -1,7 +1,12 @@
+source 'git@github.com:CocoaPods/Specs.git'
+source 'git@github.com:mercadolibre/mobile-ios_specs.git'
+
+platform :ios, '10.0'
 use_frameworks!
 
 target 'FlowEngine_Example' do
   pod 'FlowEngine', :path => '../'
+  pod 'MLCommons'
 
   target 'FlowEngine_Tests' do
     inherit! :search_paths

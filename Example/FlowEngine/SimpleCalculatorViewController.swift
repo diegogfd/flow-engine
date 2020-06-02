@@ -8,17 +8,18 @@
 
 import UIKit
 import FlowEngine
+import MLCommons
 
-class SimpleCalculatorViewController: UIViewController {
+class SimpleCalculatorViewController: MLBaseViewController, FlowEngineComponent {
     
     @IBOutlet var amountTextField: UITextField!
     @IBOutlet var errorLabel: UILabel!
-    
-    private let flowEngine: FlowEngine
+    var flowEngine: FlowEngine!
     
     init(flowEngine: FlowEngine) {
         self.flowEngine = flowEngine
         super.init(nibName: "SimpleCalculatorViewController", bundle: nil)
+        self.addBehaviour(FlowEngineBehaviour())
     }
     
     required init?(coder: NSCoder) {
