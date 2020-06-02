@@ -21,7 +21,6 @@ public class FlowEngine {
     private var currentStep: Step!
     private var actionsForCurrentStep: [Action] = []
     private var currentAction: Action?
-    
     var state: FlowState = FlowState()
         
     public func registerActions(_ actions: [Action]) {
@@ -52,6 +51,7 @@ public class FlowEngine {
             self.state = FlowState()
             self.steps = stepsResponse.steps
             self.validations = stepsResponse.validations
+            self.reset()
         } catch {
             print("Bad JSON format")
         }
@@ -142,4 +142,29 @@ public class FlowEngine {
             return false
         }.map({$0.id})
     }
+    
+    func reset(with snapshot: FlowEngineSnapshot) {
+        self.currentAction = snapshot.currentAction
+        self.currentStep = snapshot.currentStep
+        self.actionsForCurrentStep = snapshot.actionsForCurrentStep
+        self.state = snapshot.state
+    }
+    
+    func takeSnapshot() -> FlowEngineSnapshot{
+        return FlowEngineSnapshot(currentStep: self.currentStep, currentAction: self.currentAction, actionsForCurrentStep: self.actionsForCurrentStep, state: self.state)
+    }
+    
+    func reset() {
+        self.currentStep = nil
+        self.currentAction = nil
+        self.actionsForCurrentStep = []
+        self.state = FlowState()
+    }
+}
+
+struct FlowEngineSnapshot {
+    let currentStep: Step
+    let currentAction: Action?
+    let actionsForCurrentStep: [Action]
+    let state: FlowState
 }

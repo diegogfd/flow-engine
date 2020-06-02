@@ -49,13 +49,9 @@ struct Step : Decodable {
         var canEnter = false
         for field in requiredFields {
             let fieldValue = state.getFieldValue(id: field)
-            //TODO: resolver por qué nil != nil
-            if fieldValue.debugDescription == "Optional(nil)"{
+            if fieldValue.isNil() {
                 canEnter = true
             }
-        //  if fieldValue == nil {
-        //      return true
-        //  }
         }
         if let rule = rule {
             return rule.evaluate(state: state) && canEnter

@@ -35,6 +35,8 @@ TODO: Add long description of the pod here.
    s.resource_bundles = {
      'FlowEngine' => ['FlowEngine/Assets/*']
    }
+   
+   s.dependency 'MLCommons'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

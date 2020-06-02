@@ -17,7 +17,7 @@ class SimpleCongratsViewController: MLBaseViewController, FlowEngineComponent {
     init(flowEngine: FlowEngine) {
         self.flowEngine = flowEngine
         super.init(nibName: "SimpleCongratsViewController", bundle: nil)
-        self.addBehaviour(FlowEngineBehaviour())
+        self.addBehaviour(FlowEngineBehaviour(flowEngine: flowEngine))
     }
     
     required init?(coder: NSCoder) {

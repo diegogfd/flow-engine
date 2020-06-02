@@ -6,7 +6,6 @@ use_frameworks!
 
 target 'FlowEngine_Example' do
   pod 'FlowEngine', :path => '../'
-  pod 'MLCommons'
 
   target 'FlowEngine_Tests' do
     inherit! :search_paths

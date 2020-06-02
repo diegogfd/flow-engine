@@ -13,7 +13,7 @@ import Foundation
 //    case debit = "debit_card"
 //}
 
-class FlowState {
+struct FlowState {
     private(set) var amount: Double?
     private(set) var description: String?
     private(set) var installments: Int?
@@ -21,11 +21,11 @@ class FlowState {
     private(set) var cart: [Cart]?
     private(set) var showedPaymentResult: Bool?
     
-    func setAttributes(_ attributes: [Attribute]) {
+    mutating func setAttributes(_ attributes: [Attribute]) {
         attributes.forEach({self.setField(id: $0.fieldId, value: $0.value)})
     }
     
-    func setField(id: FieldId, value: Any?) {
+    mutating func setField(id: FieldId, value: Any?) {
         //TODO: ver de mejorar esto
         let propName = id.mirror.label
         switch propName {
@@ -61,7 +61,7 @@ class FlowState {
     }
     
     var fulfilledFields: [FieldId] {
-        FieldId.allCases.filter({self.getFieldValue(id: $0) != nil })
+        FieldId.allCases.filter({ return !self.getFieldValue(id: $0).isNil() })
     }
 }
 

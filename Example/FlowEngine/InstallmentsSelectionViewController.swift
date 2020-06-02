@@ -21,7 +21,7 @@ class InstallmentsSelectionViewController: MLBaseViewController, FlowEngineCompo
     init(flowEngine: FlowEngine) {
         self.flowEngine = flowEngine
         super.init(nibName: "InstallmentsSelectionViewController", bundle: nil)
-        self.addBehaviour(FlowEngineBehaviour())
+        self.addBehaviour(FlowEngineBehaviour(flowEngine: flowEngine))
     }
     
     required init?(coder: NSCoder) {
