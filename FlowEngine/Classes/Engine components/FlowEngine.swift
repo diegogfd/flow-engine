@@ -21,7 +21,7 @@ public class FlowEngine {
     private var currentStep: Step!
     private var actionsForCurrentStep: [Action] = []
     private var currentAction: Action?
-    var state: FlowState = FlowState()
+    public var state: FlowState = FlowState()
         
     public func registerActions(_ actions: [Action]) {
         self.actions.append(contentsOf: actions)

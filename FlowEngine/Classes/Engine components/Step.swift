@@ -49,7 +49,7 @@ struct Step : Decodable {
         var canEnter = false
         for field in requiredFields {
             let fieldValue = state.getFieldValue(id: field)
-            if fieldValue.isNil() {
+            if fieldValue == nil {
                 canEnter = true
             }
         }

@@ -8,65 +8,29 @@
 
 import Foundation
 
-//public enum CardType: String {
-//    case credit = "credit_card"
-//    case debit = "debit_card"
-//}
+public enum CardType: String, StringRawRepresentable {
+    case credit = "credit_card"
+    case debit = "debit_card"
+}
 
-struct FlowState {
-    private(set) var amount: Double?
-    private(set) var description: String?
-    private(set) var installments: Int?
-    private(set) var cardType: String?
-    private(set) var cart: [Cart]?
-    private(set) var showedPaymentResult: Bool?
+public struct FlowState {
+    
+    private var innerState: [FieldId : Any] = [:]
     
     mutating func setAttributes(_ attributes: [Attribute]) {
         attributes.forEach({self.setField(id: $0.fieldId, value: $0.value)})
     }
     
     mutating func setField(id: FieldId, value: Any?) {
-        //TODO: ver de mejorar esto
-        let propName = id.mirror.label
-        switch propName {
-        case "amount":
-            self.amount = value as? Double
-        case "description":
-            self.description = value as? String
-        case "installments":
-            self.installments = value as? Int
-        case "cardType":
-            self.cardType = value as? String
-        case "cart":
-            self.cart = value as? [Cart]
-        case "showedPaymentResult":
-            self.showedPaymentResult = value as? Bool
-        default:
-            break
-        }
-        
-//        let mirror = Mirror(reflecting: self)
-//        let childProp = mirror.children.first(where: {$0.label == propName})
-//        guard type(of: childProp?.value) == type(of: value) else {
-//            return
-//        }
-//        self[keyPath: \FlowState.amount] = value
+        self.innerState[id] = value
     }
     
-    func getFieldValue(id: FieldId) -> Any? {
-        let propName = id.mirror.label
-        let mirror = Mirror(reflecting: self)
-        let childProp = mirror.children.first(where: {$0.label == propName})
-        return childProp?.value
+    public func getFieldValue(id: FieldId) -> Any? {
+        //si definimos un field que sea derivado de otro objeto que guardemos en el state (por ejemplo, una rule que evalue el on_site_allowed del payment_method), aqui deberiamos definir como se obtiene el valor
+        return self.innerState[id]
     }
     
     var fulfilledFields: [FieldId] {
-        FieldId.allCases.filter({ return !self.getFieldValue(id: $0).isNil() })
+        FieldId.allCases.filter({ return self.getFieldValue(id: $0) != nil })
     }
-}
-
-struct Cart {
-    let id: String
-    let price: Double
-    let count: Int
 }

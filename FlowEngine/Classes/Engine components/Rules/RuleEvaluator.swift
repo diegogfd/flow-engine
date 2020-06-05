@@ -35,22 +35,24 @@ extension SimpleRuleEvaluator {
         } else if rule.type == .notNull {
             return value != nil
         }
-        guard let value = value as? T else {
+        // si el value es un enum, trato de obtener el rawValue
+        let rawValueExtractor = RawValueExtractor()
+        guard let value = value, let rawValue = rawValueExtractor.getRawValue(from: value) as? T else {
             return false
         }
         switch rule.type {
         case .greaterThan:
-            return self.greaterThan(left: value, right: ruleValue)
+            return self.greaterThan(left: rawValue, right: ruleValue)
         case .greaterThanOrEqual:
-            return self.greaterThanOrEqual(left: value, right: ruleValue)
+            return self.greaterThanOrEqual(left: rawValue, right: ruleValue)
         case .lessThan:
-            return self.lessThan(left: value, right: ruleValue)
+            return self.lessThan(left: rawValue, right: ruleValue)
         case .lessThanOrEqual:
-            return self.lessThanOrEqual(left: value, right: ruleValue)
+            return self.lessThanOrEqual(left: rawValue, right: ruleValue)
         case .equals:
-            return self.equals(left: value, right: ruleValue)
+            return self.equals(left: rawValue, right: ruleValue)
         case .distinct:
-            return self.distinct(left: value, right: ruleValue)
+            return self.distinct(left: rawValue, right: ruleValue)
         default:
             return false
         }
