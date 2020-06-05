@@ -9,13 +9,12 @@
 import Foundation
 import FlowEngine
 
-class InstallmentsSelectionAction: NavigationAction {
+class InstallmentsSelectionAction: NavigationAction {    
     
     required init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    var fieldIds: [FieldId] = [.installments]
     var id: ActionId = .installmentsSelection
     let navigationController: UINavigationController
         

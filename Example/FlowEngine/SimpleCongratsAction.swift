@@ -12,7 +12,6 @@ import FlowEngine
 class SimpleCongratsAction : NavigationAction {
     
     var id: ActionId = .simpleCongrats
-    var fieldIds: [FieldId] = [.showedPaymentResult]
     var flowEngine: FlowEngine!
     let navigationController: UINavigationController
     

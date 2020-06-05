@@ -25,5 +25,4 @@ public enum ActionId: String {
 public protocol Action: FlowEngineComponent {
     func execute(for fields: [FieldId])
     var id: ActionId { get }
-    var fieldIds: [FieldId] { get }
 }

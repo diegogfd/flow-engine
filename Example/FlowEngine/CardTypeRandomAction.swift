@@ -12,7 +12,6 @@ import FlowEngine
 class CardTypeRandomAction : Action {
     
     var id: ActionId = .cardTypeRandom
-    var fieldIds: [FieldId] = [.cardType]
     var flowEngine: FlowEngine!
     
     func execute(for fields: [FieldId]) {

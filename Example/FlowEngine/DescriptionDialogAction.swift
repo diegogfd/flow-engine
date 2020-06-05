@@ -36,9 +36,7 @@ class DescriptionDialogAction : NavigationAction {
     
     private let navigationController: UINavigationController
     var id: ActionId = .descriptionDialog
-    
-    var fieldIds: [FieldId] = [.description]
-    
+        
     var flowEngine: FlowEngine!
     
     

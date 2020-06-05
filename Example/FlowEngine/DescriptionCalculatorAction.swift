@@ -15,7 +15,6 @@ class DescriptionCalculatorAction: NavigationAction {
         self.navigationController = navigationController
     }
     
-    var fieldIds: [FieldId] = [.amount]
     var id: ActionId = .descriptionCalculator
     let navigationController: UINavigationController
         

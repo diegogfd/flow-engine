@@ -21,6 +21,10 @@ public class FlowEngine {
     private var currentStep: Step!
     private var actionsForCurrentStep: [Action] = []
     private var currentAction: Action?
+    private var currentActionRepresentation: ActionRepresentation? {
+        return self.activeActions.first(where: {$0.id == self.currentAction?.id})
+    }
+    
     public var state: FlowState = FlowState()
         
     public func registerActions(_ actions: [Action]) {
@@ -89,9 +93,9 @@ public class FlowEngine {
     }
     
     public func goNext() {
-        if let currentAction = self.currentAction {
+        if let currentActionRepresentation = self.currentActionRepresentation {
             //verifico que la accion actual ya cubrió todos los campos requeridos
-            let currentActionRequiredFields = currentAction.fieldIds.filter({self.currentStep.requiredFields.contains($0)})
+            let currentActionRequiredFields = currentActionRepresentation.fields.filter({self.currentStep.requiredFields.contains($0)})
             if currentActionRequiredFields.isEmpty {
                 //la acción solo cubre campos opcionales, puedo salir de la acción
                 self.goToNextStepOrAction()
@@ -126,7 +130,7 @@ public class FlowEngine {
     private func goToNextAction() {
         guard !self.actionsForCurrentStep.isEmpty else { return }
         self.currentAction = self.actionsForCurrentStep.removeFirst()
-        let actionFieldsSet = Set(self.currentAction!.fieldIds)
+        let actionFieldsSet = Set(self.currentActionRepresentation!.fields)
         let allFieldsSet = Set(self.currentStep.allFields)
         let fieldsInCommon = Array(actionFieldsSet.intersection(allFieldsSet))
         self.currentAction?.execute(for: fieldsInCommon)

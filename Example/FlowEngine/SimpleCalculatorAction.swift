@@ -15,7 +15,6 @@ class SimpleCalculatorAction: NavigationAction {
         self.navigationController = navigationController
     }
     
-    var fieldIds: [FieldId] = [.amount]
     var id: ActionId = .simpleCalculator
     let navigationController: UINavigationController
         
