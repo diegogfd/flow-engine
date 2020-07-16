@@ -8,6 +8,6 @@
 import Foundation
 
 public struct Attribute {
-    let fieldId: FieldId
+    let field: Field
     let value: Any?
 }

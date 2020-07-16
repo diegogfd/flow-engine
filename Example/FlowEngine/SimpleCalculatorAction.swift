@@ -20,7 +20,7 @@ class SimpleCalculatorAction: NavigationAction {
         
     var flowEngine: FlowEngine!
     
-    func execute(for fields: [FieldId]) {
+    func execute() {
         let viewController = SimpleCalculatorViewController(flowEngine: self.flowEngine)
         self.navigationController.pushViewController(viewController, animated: true)
     }

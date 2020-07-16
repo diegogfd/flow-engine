@@ -9,26 +9,26 @@ import Foundation
 
 struct Rule : Decodable {
     
-    enum RuleType: String, Decodable {
-        case equals
-        case distinct
-        case not
-        case and
-        case or
-        case greaterThan = "greater_than"
-        case lessThan = "less_than"
-        case greaterThanOrEqual = "greater_than_or_equal"
-        case lessThanOrEqual = "less_than_or_equal"
-        case null
-        case notNull
+    enum RuleType: String {
+        case equals = "EQUALS"
+        case distinct = "DISTINCT"
+        case not = "NOT"
+        case and = "AND"
+        case or = "OR"
+        case greaterThan = "GREATER_THAN"
+        case lessThan = "LESS_THAN"
+        case greaterThanOrEqual = "GREATER_THAN_OR_EQUAL"
+        case lessThanOrEqual = "LESS_THAN_OR_EQUAL"
+        case null = "NULL"
+        case notNull = "NOT_NULL"
     }
     
     private enum CodingKeys: String, CodingKey {
         case type
-        case fieldId = "field_id"
+        case field
         case valueType = "value_type"
         case jsonValue = "value"
-        case subRules = "sub_rules"
+        case subRules = "rule"
     }
     
     enum ValueType: String, Decodable {
@@ -39,7 +39,7 @@ struct Rule : Decodable {
     }
     
     let type: RuleType
-    let fieldId: FieldId?
+    let field: Field?
     let valueType: ValueType?
     let subRules: [Rule]?
     private let jsonValue: JSONValue?
@@ -66,8 +66,16 @@ struct Rule : Decodable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        self.fieldId = try values.decodeIfPresent(FieldId.self, forKey: .fieldId)
-        self.type = try values.decode(RuleType.self, forKey: .type)
+        self.field = try values.decodeIfPresent(Field.self, forKey: .field)
+        let rawType = try values.decode(String.self, forKey: .type)
+        if let type = RuleType(rawValue: rawType) {
+            self.type = type
+        } else {
+            throw DecodingError.typeMismatch(RuleType.self, DecodingError.Context(
+            codingPath: [],
+            debugDescription: "El tipo de rule es desconocido",
+            underlyingError: nil))
+        }
         self.valueType = try values.decodeIfPresent(ValueType.self, forKey: .valueType)
         self.jsonValue = try values.decodeIfPresent(JSONValue.self, forKey: .jsonValue)
         self.subRules = try values.decodeIfPresent([Rule].self, forKey: .subRules)

@@ -14,13 +14,13 @@ public enum FieldValidationError : Error {
 public struct FieldValidation : Decodable {
     
     public let id: String
-    let fieldId: FieldId
+    let field: Field
     let rule: Rule
     
     private enum CodingKeys: String, CodingKey {
         case id
-        case fieldId = "field_id"
-        case rule = "rules"
+        case field
+        case rule
     }
     
 }

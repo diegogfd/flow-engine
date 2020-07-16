@@ -44,7 +44,7 @@ class SimpleCalculatorViewController: MLBaseViewController, FlowEngineComponent 
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         let amount = numberFormatter.number(from: self.amountTextField.text ?? "")?.doubleValue ?? 0
-        let result = self.flowEngine.updateFlowState(fieldId: .amount, value: amount)
+        let result = self.flowEngine.updateFlowState(field: .amount, value: amount)
         if case .failure(let validationError) = result, case .failed(let failingValidations) = validationError, let validation = failingValidations.first {
             if validation.id == "amount_out_of_bounds" {
                 self.errorLabel.text = "El monto debe ser mayor a 0 y menor a 50000"

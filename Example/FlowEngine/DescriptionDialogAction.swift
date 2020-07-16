@@ -14,7 +14,7 @@ class DescriptionDialogAction : NavigationAction {
         self.navigationController = navigationController
     }
     
-    func execute(for fields: [FieldId]) {
+    func execute() {
         let alertController = UIAlertController(title: "Ingresa la descripción", message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.placeholder = "Descripción"
@@ -24,7 +24,7 @@ class DescriptionDialogAction : NavigationAction {
                 return
             }
             let description = alertController.textFields?.first?.text
-            self.flowEngine.updateFlowState(fieldId: .description, value: description)
+            self.flowEngine.updateFlowState(field: .description, value: description)
             self.navigationController.dismiss(animated: true) { [weak self] in
                 self?.flowEngine.goNext()
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum FieldId: String, CaseIterable, Decodable {
+public enum Field: String, CaseIterable, Decodable {
     case amount
     case description
     case installments

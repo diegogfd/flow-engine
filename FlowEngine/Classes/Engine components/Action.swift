@@ -23,6 +23,6 @@ public enum ActionId: String {
 }
 
 public protocol Action: FlowEngineComponent {
-    func execute(for fields: [FieldId])
+    func execute()
     var id: ActionId { get }
 }

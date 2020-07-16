@@ -10,27 +10,27 @@ import Foundation
 
 struct Step : Decodable {
     let id: String
-    let requiredFields: [FieldId]
-    let optionalFields: [FieldId]
+    let requiredFields: [Field]
+    let optionalFields: [Field]
     let rule: Rule?
         
     private enum CodingKeys: String, CodingKey {
         case id
         case requiredFields = "required_fields"
         case optionalFields = "optional_fields"
-        case rule = "rules"
+        case rule = "rule"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         let rawRequiredFields = try container.decode([String].self, forKey: .requiredFields)
-        self.requiredFields = rawRequiredFields.map { (rawField) -> FieldId in
-            return FieldId(rawValue: rawField) ?? .unknown
+        self.requiredFields = rawRequiredFields.map { (rawField) -> Field in
+            return Field(rawValue: rawField) ?? .unknown
         }
         let rawOptionalFields = try container.decodeIfPresent([String].self, forKey: .optionalFields) ?? []
-        self.optionalFields = rawOptionalFields.map { (rawField) -> FieldId in
-            return FieldId(rawValue: rawField) ?? .unknown
+        self.optionalFields = rawOptionalFields.map { (rawField) -> Field in
+            return Field(rawValue: rawField) ?? .unknown
         }
         self.rule = try container.decodeIfPresent(Rule.self, forKey: .rule)
     }
@@ -41,7 +41,7 @@ struct Step : Decodable {
         return requiredFieldsSet.isSubset(of: fulfilledFieldsSet)
     }
     
-    var allFields: [FieldId] {
+    var allFields: [Field] {
         return self.requiredFields + self.optionalFields
     }
     

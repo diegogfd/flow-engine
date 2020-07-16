@@ -14,10 +14,10 @@ class CardTypeRandomAction : Action {
     var id: ActionId = .cardTypeRandom
     var flowEngine: FlowEngine!
     
-    func execute(for fields: [FieldId]) {
+    func execute() {
         let isCredit = Bool.random()
         print("SALIO \(isCredit ? "CREDITO" : "DEBITO")")
-        self.flowEngine.updateFlowState(fieldId: .cardType, value: isCredit ? CardType.credit : CardType.debit)
+        self.flowEngine.updateFlowState(field: .cardType, value: isCredit ? CardType.credit : CardType.debit)
         self.flowEngine.goNext()
     }
     

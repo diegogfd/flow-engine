@@ -19,7 +19,7 @@ class SimpleCongratsAction : NavigationAction {
         self.navigationController = navigationController
     }
     
-    func execute(for fields: [FieldId]) {
+    func execute() {
         let viewController = SimpleCongratsViewController(flowEngine: self.flowEngine)
         self.navigationController.pushViewController(viewController, animated: true)
     }

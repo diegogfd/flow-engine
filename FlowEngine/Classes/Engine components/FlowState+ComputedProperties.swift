@@ -7,7 +7,7 @@
 
 import Foundation
 
-// para acceder (read-only) al valor de los fields más cómodamente y sin tener que castear el resultado de getFieldValue(id: FieldId), podemos definir computed properties
+// para acceder (read-only) al valor de los fields más cómodamente y sin tener que castear el resultado de getFieldValue(id: field), podemos definir computed properties
 
 extension FlowState {
     

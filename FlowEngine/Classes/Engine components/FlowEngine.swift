@@ -71,14 +71,14 @@ public class FlowEngine {
     }
     
     @discardableResult
-    public func updateFlowState(fieldId: FieldId, value: Any?) -> Result<Void,FieldValidationError> {
-        return self.updateFlowState(attributes: [Attribute(fieldId: fieldId, value: value)])
+    public func updateFlowState(field: Field, value: Any?) -> Result<Void,FieldValidationError> {
+        return self.updateFlowState(attributes: [Attribute(field: field, value: value)])
     }
     
     public func validateAttributes(attributes: [Attribute]) -> Result<Void,FieldValidationError> {
         var failedValidations: [FieldValidation] = []
         for attribute in attributes {
-            let validationsForField = self.validations.filter({ $0.fieldId == attribute.fieldId})
+            let validationsForField = self.validations.filter({ $0.field == attribute.field})
             for validation in validationsForField {
                 let result = validation.rule.evaluate(value: attribute.value)
                 if !result{
@@ -130,16 +130,13 @@ public class FlowEngine {
     private func goToNextAction() {
         guard !self.actionsForCurrentStep.isEmpty else { return }
         self.currentAction = self.actionsForCurrentStep.removeFirst()
-        let actionFieldsSet = Set(self.currentActionRepresentation!.fields)
-        let allFieldsSet = Set(self.currentStep.allFields)
-        let fieldsInCommon = Array(actionFieldsSet.intersection(allFieldsSet))
-        self.currentAction?.execute(for: fieldsInCommon)
+        self.currentAction?.execute()
     }
     
     private func getActionIds(for step: Step) -> [ActionId] {
         self.activeActions.filter { (action) -> Bool in
-            for fieldId in action.fields {
-                if step.allFields.contains(fieldId) {
+            for field in action.fields {
+                if step.allFields.contains(field) {
                     return true
                 }
             }

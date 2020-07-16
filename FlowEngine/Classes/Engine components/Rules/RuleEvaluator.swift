@@ -59,10 +59,10 @@ extension SimpleRuleEvaluator {
     }
     
     func evaluate(rule: Rule, state: FlowState) -> Bool {
-        guard let fieldId = rule.fieldId else {
+        guard let field = rule.field else {
             return false
         }
-        let value = state.getFieldValue(id: fieldId)
+        let value = state.getFieldValue(id: field)
         return self.evaluate(rule: rule, value: value)
     }
     

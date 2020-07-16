@@ -3,26 +3,21 @@
     "validations":[
         {
             "id":"amount_out_of_bounds",
-            "field_id":"amount",
-            "rules": {
-                "type":"and",
-                "field_id":null,
-                "value_type":null,
-                "value":null,
-                "sub_rules":[
+            "field":"amount",
+            "rule": {
+                "type":"AND",
+                "rule":[
                     {
-                        "type":"greater_than",
-                        "field_id": "amount",
+                        "type":"GREATER_THAN",
+                        "field": "amount",
                         "value_type": "double",
                         "value": 0,
-                        "sub_rules": null
                     },
                     {
-                        "type":"less_than_or_equal",
-                        "field_id": "amount",
+                        "type":"LESS_THAN_OR_EQUAL",
+                        "field": "amount",
                         "value_type": "double",
                         "value": 50000,
-                        "sub_rules": null
                     }
                 ]
             }
@@ -37,42 +32,33 @@
             "optional_fields":[
                 "cart",
                 "description"
-            ],
-            "rules":null
+            ]
         },
         {
             "id":"set_card_type",
             "required_fields":[
                 "card_type"
             ],
-            "optional_fields":null,
-            "rules":null
         },
         {
             "id":"set_installments",
             "required_fields":[
                 "installments"
             ],
-            "optional_fields":null,
-            "rules":{
-                "type":"and",
-                "field_id": null,
-                "value_type": null,
-                "value": null,
-                "sub_rules":[
+            "rule":{
+                "type":"AND",
+                "rule":[
                     {
-                        "type":"equals",
-                        "field_id": "card_type",
+                        "type":"EQUALS",
+                        "field": "card_type",
                         "value_type": "string",
                         "value": "credit_card",
-                        "sub_rules": null
                     },
                     {
-                        "type":"greater_than_or_equal",
-                        "field_id": "amount",
+                        "type":"GREATER_THAN_OR_EQUAL",
+                        "field": "amount",
                         "value_type": "double",
                         "value": 100,
-                        "sub_rules": null
                     }
                 ]
             }
@@ -82,8 +68,6 @@
             "required_fields":[
                 "showed_payment_result"
             ],
-            "optional_fields":null,
-            "rules": null
         }
     ]
 }

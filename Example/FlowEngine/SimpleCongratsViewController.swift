@@ -26,7 +26,7 @@ class SimpleCongratsViewController: MLBaseViewController, FlowEngineComponent {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.flowEngine.updateFlowState(fieldId: .showedPaymentResult, value: true)
+        self.flowEngine.updateFlowState(field: .showedPaymentResult, value: true)
     }
     
     @IBAction func didTapGoBack() {

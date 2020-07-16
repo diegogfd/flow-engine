@@ -48,7 +48,7 @@ extension InstallmentsSelectionViewController : UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.flowEngine.updateFlowState(fieldId: .installments, value: self.installments[indexPath.row])
+        self.flowEngine.updateFlowState(field: .installments, value: self.installments[indexPath.row])
         self.flowEngine.goNext()
     }
     
